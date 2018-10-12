@@ -1,0 +1,2 @@
+D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UserModule\obj\Debug\UserModule.csprojResolveAssemblyReference.cache
+D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UserModule\obj\Debug\UserModule.csproj.CoreCompileInputs.cache

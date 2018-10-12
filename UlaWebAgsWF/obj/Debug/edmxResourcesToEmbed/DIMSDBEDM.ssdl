@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DIMContainerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AppConfig">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="from_emailid" Type="nvarchar" MaxLength="50" />
+    <Property Name="smtpaddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="portnumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_id" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="enable_ssl" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMContainerDB.dbo.ApplicationConfig' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ApplicationConfig">
+    <Key>
+      <PropertyRef Name="ShiftStartTime" />
+    </Key>
+    <Property Name="ShiftStartTime" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CameraDtlsTbl">
+    <Key>
+      <PropertyRef Name="CameraID" />
+    </Key>
+    <Property Name="CameraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CameraIP" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="LaneID" Type="int" Nullable="false" />
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMContainerDB.dbo.CameraPosition_20FRotate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CameraPosition_20FRotate">
+    <Key>
+      <PropertyRef Name="PositionID" />
+      <PropertyRef Name="PositionName" />
+      <PropertyRef Name="PositionDescription" />
+      <PropertyRef Name="ContainerVisible" />
+    </Key>
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="PositionDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ContainerVisible" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMContainerDB.dbo.CameraPosition_40FRotate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CameraPosition_40FRotate">
+    <Key>
+      <PropertyRef Name="PositionID" />
+      <PropertyRef Name="PositionName" />
+      <PropertyRef Name="PositionDescription" />
+    </Key>
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="PositionDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CameraPositionMaster">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="PositionName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="PositionDescription" Type="nvarchar" MaxLength="200" />
+    <Property Name="ContainerVisible" Type="int" Nullable="false" />
+    <Property Name="ImageIndex" Type="int" />
+  </EntityType>
+  <EntityType Name="ContainerTransactions">
+    <Key>
+      <PropertyRef Name="TransID" />
+    </Key>
+    <Property Name="TransID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cam1Img" Type="image" />
+    <Property Name="Cam2Img" Type="image" />
+    <Property Name="Cam3Img" Type="image" />
+    <Property Name="Cam4Img" Type="image" />
+    <Property Name="Cam5Img" Type="image" />
+    <Property Name="Cam6Img" Type="image" />
+    <Property Name="Cam7Img" Type="image" />
+    <Property Name="Cam8Img" Type="image" />
+    <Property Name="Cam9Img" Type="image" />
+    <Property Name="ShippingLineID" Type="int" />
+    <Property Name="TransactionTime" Type="datetime" />
+    <Property Name="LaneID" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="DmgDtlsID" Type="int" />
+    <Property Name="ContainerDmgd" Type="bit" />
+    <Property Name="ContainerTypeID" Type="int" />
+    <Property Name="ContainerCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsoCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="VehicleNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="DriverName" Type="nvarchar" MaxLength="50" />
+    <Property Name="BATNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Displayed" Type="bit" Nullable="false" />
+    <Property Name="DIRLocation" Type="nvarchar" MaxLength="500" />
+    <Property Name="TrailerTransID" Type="int" Nullable="false" />
+    <Property Name="SequnceOfContan" Type="int" />
+    <Property Name="EmailImg" Type="image" />
+    <Property Name="ContainerType" Type="varchar" MaxLength="50" />
+    <Property Name="IsRotateImages" Type="bit" />
+    <Property Name="CancelStatus" Type="bit" />
+    <Property Name="IsManualTransaction" Type="bit" />
+    <Property Name="IsReportCreated" Type="bit" />
+  </EntityType>
+  <EntityType Name="ContainerTypeMaster">
+    <Key>
+      <PropertyRef Name="ContainerTypeID" />
+    </Key>
+    <Property Name="ContainerTypeID" Type="int" Nullable="false" />
+    <Property Name="ContainerTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DamageTransaction">
+    <Key>
+      <PropertyRef Name="DmgDtlsID" />
+    </Key>
+    <Property Name="DmgDtlsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RemarkCam1" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam2" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam3" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam4" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam5" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam6" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam7" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam8" Type="nvarchar" MaxLength="100" />
+    <Property Name="RemarkCam9" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam1" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam2" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam3" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam4" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam5" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam6" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam7" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam8" Type="nvarchar" MaxLength="100" />
+    <Property Name="DmgdTypeCam9" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="DamageTypeMaster">
+    <Key>
+      <PropertyRef Name="DmgTypeid" />
+    </Key>
+    <Property Name="DmgTypeid" Type="int" Nullable="false" />
+    <Property Name="DmgTypeName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LaneMaster">
+    <Key>
+      <PropertyRef Name="LaneID" />
+    </Key>
+    <Property Name="LaneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeOfGate" Type="int" Nullable="false" />
+    <Property Name="LaneName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsBusy" Type="int" Nullable="false" />
+    <Property Name="SystemIP" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="mail_id_list">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mail_id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMContainerDB.dbo.OwnerCodeMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="OwnerCodeMaster">
+    <Key>
+      <PropertyRef Name="OwnerID" />
+      <PropertyRef Name="OwnerCode" />
+    </Key>
+    <Property Name="OwnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShippingLineMaster">
+    <Key>
+      <PropertyRef Name="ShippingLineID" />
+    </Key>
+    <Property Name="ShippingLineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShippingLineName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CompanyAddress" Type="nvarchar(max)" />
+    <Property Name="ContactNo" Type="nvarchar(max)" />
+    <Property Name="faxno" Type="nvarchar" MaxLength="50" />
+    <Property Name="emailid1" Type="nvarchar" MaxLength="50" />
+    <Property Name="emailid2" Type="nvarchar" MaxLength="50" />
+    <Property Name="emailid3" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DIMContainerDB.dbo.TempContTranTbl' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TempContTranTbl">
+    <Key>
+      <PropertyRef Name="RowID" />
+    </Key>
+    <Property Name="RowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cam1Img" Type="image" />
+    <Property Name="Cam2Img" Type="image" />
+    <Property Name="Cam3Img" Type="image" />
+    <Property Name="Cam4Img" Type="image" />
+    <Property Name="Cam5Img" Type="image" />
+    <Property Name="Cam6Img" Type="image" />
+    <Property Name="Cam7Img" Type="image" />
+    <Property Name="Cam8Img" Type="image" />
+    <Property Name="Cam9Img" Type="image" />
+    <Property Name="dir_loc" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="50" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsLoggedin" Type="bit" Nullable="false" />
+    <Property Name="IsSuperUser" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CameraDtlsTbl_CameraPositionMaster">
+    <End Role="CameraPositionMaster" Type="Self.CameraPositionMaster" Multiplicity="1" />
+    <End Role="CameraDtlsTbl" Type="Self.CameraDtlsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CameraPositionMaster">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="CameraDtlsTbl">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CameraDtlsTbl_CameraPositionMaster1">
+    <End Role="CameraPositionMaster" Type="Self.CameraPositionMaster" Multiplicity="1" />
+    <End Role="CameraDtlsTbl" Type="Self.CameraDtlsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CameraPositionMaster">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="CameraDtlsTbl">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CameraIPDetails_GateDetails">
+    <End Role="LaneMaster" Type="Self.LaneMaster" Multiplicity="1" />
+    <End Role="CameraDtlsTbl" Type="Self.CameraDtlsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LaneMaster">
+        <PropertyRef Name="LaneID" />
+      </Principal>
+      <Dependent Role="CameraDtlsTbl">
+        <PropertyRef Name="LaneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_ContainerTransactions">
+    <End Role="ContainerTransactions" Type="Self.ContainerTransactions" Multiplicity="1" />
+    <End Role="ContainerTransactions1" Type="Self.ContainerTransactions" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="ContainerTransactions">
+        <PropertyRef Name="TransID" />
+      </Principal>
+      <Dependent Role="ContainerTransactions1">
+        <PropertyRef Name="TransID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CameraPositionID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CheckListLists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="ListItems" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CheckListLits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="ListItems" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Damgedornot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="gate" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fetch_image_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TransactionID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetContainerPostion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="gate" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetDateFromString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+    <Parameter Name="DateString" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="GetGateName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="gate" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetgateSatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+    <Parameter Name="Busy" Type="int" Mode="In" />
+  </Function>
+  <Function Name="savecamerapositionngdata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="positiondescription" Type="varchar" Mode="In" />
+    <Parameter Name="userdescriptionposition" Type="varchar" Mode="In" />
+    <Parameter Name="containervisible" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spsavecameradata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="cameraip" Type="varchar" Mode="In" />
+    <Parameter Name="laneid" Type="varchar" Mode="In" />
+    <Parameter Name="positiondesc" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spsavelanedata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ingate" Type="varchar" Mode="In" />
+    <Parameter Name="lanename" Type="varchar" Mode="In" />
+    <Parameter Name="busy" Type="varchar" Mode="In" />
+    <Parameter Name="ipaddress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spsaveshippinglinedata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="shippinglinename" Type="varchar" Mode="In" />
+    <Parameter Name="companyaddr" Type="varchar" Mode="In" />
+    <Parameter Name="phoneno" Type="varchar" Mode="In" />
+    <Parameter Name="faxno" Type="varchar" Mode="In" />
+    <Parameter Name="emailid1" Type="varchar" Mode="In" />
+    <Parameter Name="emailid2" Type="varchar" Mode="In" />
+    <Parameter Name="emailid3" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spupdatecamerapositioningdata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="primarykey" Type="varchar" Mode="In" />
+    <Parameter Name="positiondescription" Type="varchar" Mode="In" />
+    <Parameter Name="userdescriptionposition" Type="varchar" Mode="In" />
+    <Parameter Name="containervisible" Type="int" Mode="In" />
+  </Function>
+  <Function Name="updatecamera" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ipofcamera" Type="varchar" Mode="In" />
+    <Parameter Name="cameraid" Type="int" Mode="In" />
+    <Parameter Name="laneid" Type="varchar" Mode="In" />
+    <Parameter Name="positiondesc" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UpdateEmptytransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TransiD" Type="int" Mode="In" />
+  </Function>
+  <Function Name="updatelanedata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="ingate" Type="varchar" Mode="In" />
+    <Parameter Name="lanenameold" Type="varchar" Mode="In" />
+    <Parameter Name="lanenamenew" Type="varchar" Mode="In" />
+    <Parameter Name="busy" Type="int" Mode="In" />
+    <Parameter Name="ipaddress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="updateshippingline" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="shippinglinenamenew" Type="varchar" Mode="In" />
+    <Parameter Name="shippinglinenameold" Type="varchar" Mode="In" />
+    <Parameter Name="companyaddress" Type="varchar" Mode="In" />
+    <Parameter Name="companyphoneno" Type="varchar" Mode="In" />
+    <Parameter Name="faxno" Type="varchar" Mode="In" />
+    <Parameter Name="emailid1" Type="varchar" Mode="In" />
+    <Parameter Name="emailid2" Type="varchar" Mode="In" />
+    <Parameter Name="emailid3" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="DIMContainerDBModelStoreContainer">
+    <EntitySet Name="AppConfig" EntityType="Self.AppConfig" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CameraDtlsTbl" EntityType="Self.CameraDtlsTbl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CameraPositionMaster" EntityType="Self.CameraPositionMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContainerTransactions" EntityType="Self.ContainerTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContainerTypeMaster" EntityType="Self.ContainerTypeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DamageTransaction" EntityType="Self.DamageTransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DamageTypeMaster" EntityType="Self.DamageTypeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LaneMaster" EntityType="Self.LaneMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="mail_id_list" EntityType="Self.mail_id_list" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShippingLineMaster" EntityType="Self.ShippingLineMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApplicationConfig" EntityType="Self.ApplicationConfig" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ApplicationConfig].[ShiftStartTime] AS [ShiftStartTime]
+    FROM [dbo].[ApplicationConfig] AS [ApplicationConfig]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="CameraPosition_20FRotate" EntityType="Self.CameraPosition_20FRotate" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CameraPosition_20FRotate].[PositionID] AS [PositionID], 
+    [CameraPosition_20FRotate].[PositionName] AS [PositionName], 
+    [CameraPosition_20FRotate].[PositionDescription] AS [PositionDescription], 
+    [CameraPosition_20FRotate].[ContainerVisible] AS [ContainerVisible]
+    FROM [dbo].[CameraPosition_20FRotate] AS [CameraPosition_20FRotate]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="CameraPosition_40FRotate" EntityType="Self.CameraPosition_40FRotate" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [CameraPosition_40FRotate].[PositionID] AS [PositionID], 
+    [CameraPosition_40FRotate].[PositionName] AS [PositionName], 
+    [CameraPosition_40FRotate].[PositionDescription] AS [PositionDescription]
+    FROM [dbo].[CameraPosition_40FRotate] AS [CameraPosition_40FRotate]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="OwnerCodeMaster" EntityType="Self.OwnerCodeMaster" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [OwnerCodeMaster].[OwnerID] AS [OwnerID], 
+    [OwnerCodeMaster].[OwnerCode] AS [OwnerCode]
+    FROM [dbo].[OwnerCodeMaster] AS [OwnerCodeMaster]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TempContTranTbl" EntityType="Self.TempContTranTbl" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TempContTranTbl].[RowID] AS [RowID], 
+    [TempContTranTbl].[Cam1Img] AS [Cam1Img], 
+    [TempContTranTbl].[Cam2Img] AS [Cam2Img], 
+    [TempContTranTbl].[Cam3Img] AS [Cam3Img], 
+    [TempContTranTbl].[Cam4Img] AS [Cam4Img], 
+    [TempContTranTbl].[Cam5Img] AS [Cam5Img], 
+    [TempContTranTbl].[Cam6Img] AS [Cam6Img], 
+    [TempContTranTbl].[Cam7Img] AS [Cam7Img], 
+    [TempContTranTbl].[Cam8Img] AS [Cam8Img], 
+    [TempContTranTbl].[Cam9Img] AS [Cam9Img], 
+    [TempContTranTbl].[dir_loc] AS [dir_loc]
+    FROM [dbo].[TempContTranTbl] AS [TempContTranTbl]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_CameraDtlsTbl_CameraPositionMaster" Association="Self.FK_CameraDtlsTbl_CameraPositionMaster">
+      <End Role="CameraPositionMaster" EntitySet="CameraPositionMaster" />
+      <End Role="CameraDtlsTbl" EntitySet="CameraDtlsTbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CameraDtlsTbl_CameraPositionMaster1" Association="Self.FK_CameraDtlsTbl_CameraPositionMaster1">
+      <End Role="CameraPositionMaster" EntitySet="CameraPositionMaster" />
+      <End Role="CameraDtlsTbl" EntitySet="CameraDtlsTbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CameraIPDetails_GateDetails" Association="Self.FK_CameraIPDetails_GateDetails">
+      <End Role="LaneMaster" EntitySet="LaneMaster" />
+      <End Role="CameraDtlsTbl" EntitySet="CameraDtlsTbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_ContainerTransactions" Association="Self.FK_ContainerTransactions_ContainerTransactions">
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+      <End Role="ContainerTransactions1" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

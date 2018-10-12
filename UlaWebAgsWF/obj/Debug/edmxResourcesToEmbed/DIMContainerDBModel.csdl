@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DIMContainerDB_RevisedModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CameraDtlsTbl">
+    <Key>
+      <PropertyRef Name="CameraID" />
+    </Key>
+    <Property Name="CameraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CameraIP" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LaneID" Type="Int32" Nullable="false" />
+    <Property Name="PositionID" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CameraPositionMaster" Relationship="Self.FK_CameraDtlsTbl_CameraPositionMaster" FromRole="CameraDtlsTbl" ToRole="CameraPositionMaster" />
+    <NavigationProperty Name="LaneMaster" Relationship="Self.FK_CameraIPDetails_GateDetails" FromRole="CameraDtlsTbl" ToRole="LaneMaster" />
+  </EntityType>
+  <EntityType Name="CameraPositionMaster">
+    <Key>
+      <PropertyRef Name="PositionID" />
+    </Key>
+    <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PositionDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ContainerVisible" Type="Int32" Nullable="false" />
+    <Property Name="ImageIndex" Type="Int32" />
+    <NavigationProperty Name="CameraDtlsTbls" Relationship="Self.FK_CameraDtlsTbl_CameraPositionMaster" FromRole="CameraPositionMaster" ToRole="CameraDtlsTbl" />
+  </EntityType>
+  <EntityType Name="ContainerTransaction">
+    <Key>
+      <PropertyRef Name="TransID" />
+    </Key>
+    <Property Name="TransID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShippingLineID" Type="Int32" />
+    <Property Name="TransactionTime" Type="DateTime" Precision="3" />
+    <Property Name="LaneID" Type="Int32" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="DmgDtlsID" Type="Int32" />
+    <Property Name="ContainerDmgd" Type="Boolean" />
+    <Property Name="ContainerTypeID" Type="Int32" />
+    <Property Name="ContainerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsoCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VehicleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DriverName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BATNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Displayed" Type="Boolean" Nullable="false" />
+    <Property Name="DIRLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TrailerTransID" Type="Int32" Nullable="false" />
+    <Property Name="SequnceOfContan" Type="Int32" />
+    <Property Name="EmailImg" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ContainerType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsRotateImages" Type="Boolean" />
+    <Property Name="CancelStatus" Type="Boolean" />
+    <Property Name="IsManualTransaction" Type="Boolean" />
+    <Property Name="IsReportCreated" Type="Boolean" />
+    <NavigationProperty Name="ContainerTypeMaster" Relationship="Self.FK_ContainerTransactions_ContainerTypeMaster" FromRole="ContainerTransactions" ToRole="ContainerTypeMaster" />
+    <NavigationProperty Name="DamageTransaction" Relationship="Self.FK_ContainerTransactions_DamageTransaction" FromRole="ContainerTransactions" ToRole="DamageTransaction" />
+    <NavigationProperty Name="LaneMaster" Relationship="Self.FK_ContainerTransactions_LaneMaster" FromRole="ContainerTransactions" ToRole="LaneMaster" />
+    <NavigationProperty Name="ShippingLineMaster" Relationship="Self.FK_ContainerTransactions_ShippingLineMaster" FromRole="ContainerTransactions" ToRole="ShippingLineMaster" />
+    <NavigationProperty Name="UserMaster" Relationship="Self.FK_ContainerTransactions_UserMaster" FromRole="ContainerTransactions" ToRole="UserMaster" />
+  </EntityType>
+  <EntityType Name="ContainerTypeMaster">
+    <Key>
+      <PropertyRef Name="ContainerTypeID" />
+    </Key>
+    <Property Name="ContainerTypeID" Type="Int32" Nullable="false" />
+    <Property Name="ContainerTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ContainerTransactions" Relationship="Self.FK_ContainerTransactions_ContainerTypeMaster" FromRole="ContainerTypeMaster" ToRole="ContainerTransactions" />
+  </EntityType>
+  <EntityType Name="DamageTransaction">
+    <Key>
+      <PropertyRef Name="DmgDtlsID" />
+    </Key>
+    <Property Name="DmgDtlsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RemarkCam1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam5" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam6" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RemarkCam7" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CommonRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam5" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam6" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DmgdTypeCam7" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CommonDmgTypes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ContainerTransactions" Relationship="Self.FK_ContainerTransactions_DamageTransaction" FromRole="DamageTransaction" ToRole="ContainerTransactions" />
+  </EntityType>
+  <EntityType Name="DamageTypeMaster">
+    <Key>
+      <PropertyRef Name="DmgTypeid" />
+    </Key>
+    <Property Name="DmgTypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DmgTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="LaneMaster">
+    <Key>
+      <PropertyRef Name="LaneID" />
+    </Key>
+    <Property Name="LaneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeOfGate" Type="Int32" Nullable="false" />
+    <Property Name="LaneName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsBusy" Type="Int32" Nullable="false" />
+    <Property Name="SystemIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CameraDtlsTbls" Relationship="Self.FK_CameraIPDetails_GateDetails" FromRole="LaneMaster" ToRole="CameraDtlsTbl" />
+    <NavigationProperty Name="ContainerTransactions" Relationship="Self.FK_ContainerTransactions_LaneMaster" FromRole="LaneMaster" ToRole="ContainerTransactions" />
+  </EntityType>
+  <EntityType Name="ShippingLineMaster">
+    <Key>
+      <PropertyRef Name="ShippingLineID" />
+    </Key>
+    <Property Name="ShippingLineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShippingLineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompanyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="faxno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emailid1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emailid2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emailid3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ContainerTransactions" Relationship="Self.FK_ContainerTransactions_ShippingLineMaster" FromRole="ShippingLineMaster" ToRole="ContainerTransactions" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserMaster">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsLoggedin" Type="Boolean" Nullable="false" />
+    <Property Name="IsSuperUser" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ContainerTransactions" Relationship="Self.FK_ContainerTransactions_UserMaster" FromRole="UserMaster" ToRole="ContainerTransactions" />
+  </EntityType>
+  <EntityType Name="ApplicationConfig">
+    <Key>
+      <PropertyRef Name="ShiftStartTime" />
+    </Key>
+    <Property Name="ShiftStartTime" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OwnerCodeMaster">
+    <Key>
+      <PropertyRef Name="OwnerID" />
+      <PropertyRef Name="OwnerCode" />
+    </Key>
+    <Property Name="OwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CameraDtlsTbl_CameraPositionMaster">
+    <End Role="CameraPositionMaster" Type="Self.CameraPositionMaster" Multiplicity="1" />
+    <End Role="CameraDtlsTbl" Type="Self.CameraDtlsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CameraPositionMaster">
+        <PropertyRef Name="PositionID" />
+      </Principal>
+      <Dependent Role="CameraDtlsTbl">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CameraIPDetails_GateDetails">
+    <End Role="LaneMaster" Type="Self.LaneMaster" Multiplicity="1" />
+    <End Role="CameraDtlsTbl" Type="Self.CameraDtlsTbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LaneMaster">
+        <PropertyRef Name="LaneID" />
+      </Principal>
+      <Dependent Role="CameraDtlsTbl">
+        <PropertyRef Name="LaneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_ContainerTypeMaster">
+    <End Role="ContainerTypeMaster" Type="Self.ContainerTypeMaster" Multiplicity="0..1" />
+    <End Role="ContainerTransactions" Type="Self.ContainerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContainerTypeMaster">
+        <PropertyRef Name="ContainerTypeID" />
+      </Principal>
+      <Dependent Role="ContainerTransactions">
+        <PropertyRef Name="ContainerTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_DamageTransaction">
+    <End Role="DamageTransaction" Type="Self.DamageTransaction" Multiplicity="0..1" />
+    <End Role="ContainerTransactions" Type="Self.ContainerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DamageTransaction">
+        <PropertyRef Name="DmgDtlsID" />
+      </Principal>
+      <Dependent Role="ContainerTransactions">
+        <PropertyRef Name="DmgDtlsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_LaneMaster">
+    <End Role="LaneMaster" Type="Self.LaneMaster" Multiplicity="0..1" />
+    <End Role="ContainerTransactions" Type="Self.ContainerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LaneMaster">
+        <PropertyRef Name="LaneID" />
+      </Principal>
+      <Dependent Role="ContainerTransactions">
+        <PropertyRef Name="LaneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_ShippingLineMaster">
+    <End Role="ShippingLineMaster" Type="Self.ShippingLineMaster" Multiplicity="0..1" />
+    <End Role="ContainerTransactions" Type="Self.ContainerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShippingLineMaster">
+        <PropertyRef Name="ShippingLineID" />
+      </Principal>
+      <Dependent Role="ContainerTransactions">
+        <PropertyRef Name="ShippingLineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContainerTransactions_UserMaster">
+    <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+    <End Role="ContainerTransactions" Type="Self.ContainerTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMaster">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ContainerTransactions">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DIMContainerDB_RevisedEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CameraDtlsTbls" EntityType="Self.CameraDtlsTbl" />
+    <EntitySet Name="CameraPositionMasters" EntityType="Self.CameraPositionMaster" />
+    <EntitySet Name="ContainerTransactions" EntityType="Self.ContainerTransaction" />
+    <EntitySet Name="ContainerTypeMasters" EntityType="Self.ContainerTypeMaster" />
+    <EntitySet Name="DamageTransactions" EntityType="Self.DamageTransaction" />
+    <EntitySet Name="DamageTypeMasters" EntityType="Self.DamageTypeMaster" />
+    <EntitySet Name="LaneMasters" EntityType="Self.LaneMaster" />
+    <EntitySet Name="ShippingLineMasters" EntityType="Self.ShippingLineMaster" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+    <EntitySet Name="ApplicationConfigs" EntityType="Self.ApplicationConfig" />
+    <EntitySet Name="OwnerCodeMasters" EntityType="Self.OwnerCodeMaster" />
+    <AssociationSet Name="FK_CameraDtlsTbl_CameraPositionMaster" Association="Self.FK_CameraDtlsTbl_CameraPositionMaster">
+      <End Role="CameraPositionMaster" EntitySet="CameraPositionMasters" />
+      <End Role="CameraDtlsTbl" EntitySet="CameraDtlsTbls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CameraIPDetails_GateDetails" Association="Self.FK_CameraIPDetails_GateDetails">
+      <End Role="LaneMaster" EntitySet="LaneMasters" />
+      <End Role="CameraDtlsTbl" EntitySet="CameraDtlsTbls" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_ContainerTypeMaster" Association="Self.FK_ContainerTransactions_ContainerTypeMaster">
+      <End Role="ContainerTypeMaster" EntitySet="ContainerTypeMasters" />
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_DamageTransaction" Association="Self.FK_ContainerTransactions_DamageTransaction">
+      <End Role="DamageTransaction" EntitySet="DamageTransactions" />
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_LaneMaster" Association="Self.FK_ContainerTransactions_LaneMaster">
+      <End Role="LaneMaster" EntitySet="LaneMasters" />
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_ShippingLineMaster" Association="Self.FK_ContainerTransactions_ShippingLineMaster">
+      <End Role="ShippingLineMaster" EntitySet="ShippingLineMasters" />
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContainerTransactions_UserMaster" Association="Self.FK_ContainerTransactions_UserMaster">
+      <End Role="UserMaster" EntitySet="UserMasters" />
+      <End Role="ContainerTransactions" EntitySet="ContainerTransactions" />
+    </AssociationSet>
+    <FunctionImport Name="CameraPositionID" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="fetch_image_details" ReturnType="Collection(Int32)">
+      <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="savecamerapositionngdata" ReturnType="Collection(Int32)">
+      <Parameter Name="positiondescription" Mode="In" Type="String" />
+      <Parameter Name="userdescriptionposition" Mode="In" Type="String" />
+      <Parameter Name="containervisible" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DIMContainerDB_RevisedModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DIMContainerDB_RevisedModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spsavecameradata" ReturnType="Collection(Int32)">
+      <Parameter Name="cameraip" Mode="In" Type="String" />
+      <Parameter Name="laneid" Mode="In" Type="String" />
+      <Parameter Name="positiondesc" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spsavelanedata">
+      <Parameter Name="ingate" Mode="In" Type="String" />
+      <Parameter Name="lanename" Mode="In" Type="String" />
+      <Parameter Name="busy" Mode="In" Type="String" />
+      <Parameter Name="ipaddress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spsaveshippinglinedata">
+      <Parameter Name="shippinglinename" Mode="In" Type="String" />
+      <Parameter Name="companyaddr" Mode="In" Type="String" />
+      <Parameter Name="phoneno" Mode="In" Type="String" />
+      <Parameter Name="faxno" Mode="In" Type="String" />
+      <Parameter Name="emailid1" Mode="In" Type="String" />
+      <Parameter Name="emailid2" Mode="In" Type="String" />
+      <Parameter Name="emailid3" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spupdatecamerapositioningdata">
+      <Parameter Name="primarykey" Mode="In" Type="String" />
+      <Parameter Name="positiondescription" Mode="In" Type="String" />
+      <Parameter Name="userdescriptionposition" Mode="In" Type="String" />
+      <Parameter Name="containervisible" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="updatecamera">
+      <Parameter Name="ipofcamera" Mode="In" Type="String" />
+      <Parameter Name="cameraid" Mode="In" Type="Int32" />
+      <Parameter Name="laneid" Mode="In" Type="String" />
+      <Parameter Name="positiondesc" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateEmptytransaction">
+      <Parameter Name="TransiD" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="updatelanedata">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="ingate" Mode="In" Type="String" />
+      <Parameter Name="lanenameold" Mode="In" Type="String" />
+      <Parameter Name="lanenamenew" Mode="In" Type="String" />
+      <Parameter Name="busy" Mode="In" Type="Int32" />
+      <Parameter Name="ipaddress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="updateshippingline">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="shippinglinenamenew" Mode="In" Type="String" />
+      <Parameter Name="shippinglinenameold" Mode="In" Type="String" />
+      <Parameter Name="companyaddress" Mode="In" Type="String" />
+      <Parameter Name="companyphoneno" Mode="In" Type="String" />
+      <Parameter Name="faxno" Mode="In" Type="String" />
+      <Parameter Name="emailid1" Mode="In" Type="String" />
+      <Parameter Name="emailid2" Mode="In" Type="String" />
+      <Parameter Name="emailid3" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

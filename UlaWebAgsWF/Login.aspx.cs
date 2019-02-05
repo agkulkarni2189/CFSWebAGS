@@ -8,18 +8,23 @@ using DIMSContainerDBEFDLL;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net;
+using NLog;
+using DIMSContainerDBEFDLL.EntityProxies;
+using AutoMapper;
+using System.Net.NetworkInformation;
 
 namespace UlaWebAgsWF
 {
     public partial class Login : System.Web.UI.Page
     {
-        private DIMContainerDB_RevisedEntities dcre;
+        private DIMContainerDB_Revised_DevEntities dcre;
         private ServerUtilities utilities = null;
+        private static Logger logger = LogManager.GetLogger("UserLoginLogger", typeof(Login));
 
         protected void Page_Load(object sender, EventArgs e)
         {
             ClearMessages();
-            dcre = new DIMContainerDB_RevisedEntities();
+            dcre = new DIMContainerDB_Revised_DevEntities();
             this.Page.Title = "Login";
             utilities = new ServerUtilities();
 
@@ -32,13 +37,28 @@ namespace UlaWebAgsWF
                 txtFailureMsg.Visible = true;
                 PnlFailureMsg.Visible = true;
             }
-
-            if (!string.IsNullOrEmpty(HttpContext.Current.Session["SuccessMsg"] as string))
+            else if (!string.IsNullOrEmpty(HttpContext.Current.Session["SuccessMsg"] as string))
             {
                 txtSuccessMsg.Text = HttpContext.Current.Session["SuccessMsg"].ToString();
                 txtSuccessMsg.Visible = true;
                 PnlSuccessMsg.Visible = true;
                 HttpContext.Current.Session.Remove("SuccessMsg");
+            }
+            else if (HttpContext.Current.Session["LoggedInUser"] != null)
+            {
+                UserMasterProxy LoggedInUser = (UserMasterProxy)HttpContext.Current.Session["LoggedInUser"];
+
+                if (LoggedInUser.IsLoggedin && LoggedInUser.IsActive)
+                {
+                    HttpContext.Current.Session["SuccessMsg"] = "User " + LoggedInUser.UserName + " is already logged in";
+
+                    logger.Info(new LogMessageGenerator(() =>
+                    {
+                        return "User " + LoggedInUser.UserName + " is already logged in, redirecting to dashboard";
+                    }));
+
+                    Response.Redirect("Default.aspx", false);
+                }
             }
         }
 
@@ -52,13 +72,17 @@ namespace UlaWebAgsWF
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            UserMaster UserToBeAuthenticated = null;
-            UserMaster AuthenticatedUser = null;
+            UserMasterProxy UserToBeAuthenticated = null;
+            UserMasterProxy AuthenticatedUser = null;
             List<sp_GetScreensFromRoleID_Result> UserAccessibleScreens = null;
 
             if (Page.IsValid)
             {
-                UserToBeAuthenticated = new UserMaster() { UserName = txtUserName.Text, Password = txtPassword.Text };
+                logger.Info(new LogMessageGenerator(() => {
+                    return "Initiating user log in process";
+                }));
+
+                UserToBeAuthenticated = new UserMasterProxy() { UserName = txtUserName.Text, Password = txtPassword.Text };
 
                 using (UserAuthentication UAuthentication = new UserAuthentication(ref UserToBeAuthenticated))
                 {
@@ -68,47 +92,90 @@ namespace UlaWebAgsWF
                     {
                         if (AuthenticatedUser.IsLoggedin)
                         {
-                            txtFailureMsg.Text = "User " + AuthenticatedUser.UserName + " is already logged in.";
-                            PnlFailureMsg.Visible = true;
-                            return;
+                            throw new InvalidOperationException("User " + AuthenticatedUser.UserName + " is already logged in.");
                         }
 
                         if (!AuthenticatedUser.IsActive)
                         {
-                            txtFailureMsg.Text = "User " + AuthenticatedUser.UserName + " is not active. Contact system admin";
-                            PnlFailureMsg.Visible = true;
-                            return;
+                            throw new InvalidOperationException("User " + AuthenticatedUser.UserName + " is not active, unable to log in");
                         }
 
-                        UserAccessibleScreens = dcre.sp_GetScreensFromRoleID(AuthenticatedUser.RoleID).ToList<sp_GetScreensFromRoleID_Result>();
+                        UserAccessibleScreens = dcre.sp_GetScreensFromRoleID(AuthenticatedUser.DesignationID).ToList<sp_GetScreensFromRoleID_Result>();
 
                         using (UserAuthorization UAuthorization = new UserAuthorization(ref AuthenticatedUser, ref UserAccessibleScreens))
                         {
                             if (UAuthorization.canUserAccessHomePage(ref AuthenticatedUser))
                             {
-                                HttpContext.Current.Session["UserAccessibleScreens"] = UserAccessibleScreens;
-                                AuthenticatedUser.IsLoggedin = true;
-                                UserMaster UserToLogInDB = dcre.UserMasters.Where(a => a.UserId.Equals(AuthenticatedUser.UserId)).First();
-                                UserToLogInDB.IsLoggedin = true;
-                                AuthenticatedUser.Password = null;
-                                HttpContext.Current.Session["LoggedInUser"] = AuthenticatedUser;
-                                HttpContext.Current.Session["SysIP"] = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(a => a.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(s => s).First().ToString();
-                                dcre.SaveChanges();
-                                Response.Redirect("Default.aspx", false);
-                                Context.ApplicationInstance.CompleteRequest();
+                                string CurrentDeviceMAC = NetworkInterface.GetAllNetworkInterfaces().Where(a => a.OperationalStatus.Equals(OperationalStatus.Up)).Select(b => b.GetPhysicalAddress()).FirstOrDefault().ToString();
+                                DeviceMasterProxy CurrentDevice = Mapper.Map<DeviceMasterProxy>(dcre.DeviceMasters.Where(a => a.DeviceIP.Equals(Request.UserHostAddress)).FirstOrDefault());
+
+                                if (CurrentDevice == null)
+                                {
+                                    throw new InvalidOperationException("This device is not registered with the system");
+                                }
+                                else
+                                {
+                                    using (UserAuthorization UserDevAuth = new UserAuthorization(ref AuthenticatedUser, ref CurrentDevice))
+                                    {
+                                        if (UserDevAuth.canUserAccessDevice())
+                                        {
+                                            HttpContext.Current.Session["UserAccessibleScreens"] = UserAccessibleScreens;
+                                            AuthenticatedUser.IsLoggedin = true;
+                                            UserMasterProxy UserToLogInDB = Mapper.Map<UserMasterProxy>(dcre.UserMasters.Where(a => a.UserId.Equals(AuthenticatedUser.UserId)).First());
+                                            UserToLogInDB.IsLoggedin = true;
+                                            UserToLogInDB.DeviceID = CurrentDevice.ID;
+                                            AuthenticatedUser.Password = null;
+
+                                            HttpContext.Current.Session["LoggedInUser"] = AuthenticatedUser;
+                                            HttpContext.Current.Session["LoggedInDevice"] = CurrentDevice;
+                                            dcre.SaveChanges();
+
+                                            logger.Info(new LogMessageGenerator(() => {
+                                                return "Log in successful for\n" + AuthenticatedUser.ToString() + "\naccessing from system: " + CurrentDevice.ToString();
+                                            }));
+
+                                            if (HttpContext.Current.Session["PasswordResetRequest"] != null)
+                                            {
+                                                bool PasswordResetRequest = Boolean.Parse(HttpContext.Current.Session["PasswordResetRequest"] as string);
+
+                                                if (PasswordResetRequest)
+                                                {
+                                                    HttpContext.Current.Session["InfoMsg"] = "First user, need to reset the password";
+
+                                                    logger.Info(new LogMessageGenerator(() =>
+                                                    {
+                                                        return "User loggin in first time, redirecting to password reset page";
+                                                    }));
+
+                                                    Response.Redirect("PasswordReset.aspx", false);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                logger.Info(new LogMessageGenerator(() =>
+                                                {
+                                                    return "Redirecting to dashboard";
+                                                }));
+
+                                                Response.Redirect("Default.aspx", false);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            throw new InvalidOperationException("User " + AuthenticatedUser.ToString() + " is not allowed to access the application from device: " + CurrentDevice.ToString());
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
-                                txtFailureMsg.Text = "Access previlege to dashboard has been revoked for this user. Please contact system admin.";
-                                PnlFailureMsg.Visible = true;
-                                return;
+                                throw new InvalidOperationException("Access previlege to dashboard has been revoked for " + AuthenticatedUser.ToString() + ". Please contact system admin.");
                             }
                         }
                     }
                     else
                     {
-                        txtFailureMsg.Text = "Invalid login credentials, contact system admin.";
-                        PnlFailureMsg.Visible = true;
+                        throw new InvalidOperationException("User log in failed due to invalid log in credentials");
                     }
                 }
             }

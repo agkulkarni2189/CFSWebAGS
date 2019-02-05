@@ -37,6 +37,9 @@
                     <asp:CheckBoxList ID="ScreenAuthorizedFor" CssClass="form-control"  runat="server">
                     </asp:CheckBoxList>
                 </div>
+                <div class="checkbox">
+                    <asp:CheckBox ID="CbxIsSU" runat="server" Text="Super User?" />
+                </div>
                 <asp:Button ID="NewRoleBtnSubmit" UseSubmitBehavior="false" runat="server" CssClass="btn btn-default" Text="Add Role" OnClick="NewRoleBtnSubmit_Click" />
             </form>
         </asp:Panel>
@@ -54,12 +57,12 @@
                 <asp:TemplateField HeaderText="Accessible Screens" ControlStyle-BorderStyle="None">
                     <ItemTemplate>
                         <asp:CheckBoxList ID="ScreenAccessCBLPrev" RepeatDirection="Horizontal" DataSourceID="RolesScreensEDS" DataTextField="ScreenName" DataValueField="ID" Enabled="false" runat="server"></asp:CheckBoxList>
-                        <asp:EntityDataSource ID="RolesScreensEDS" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="ScreenMasters" Select="it.[ID], it.[ScreenName]">
+                        <asp:EntityDataSource ID="RolesScreensEDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="ScreenMasters" Select="it.[ID], it.[ScreenName]">
                         </asp:EntityDataSource> 
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:CheckBoxList ID="ScreenAccessCBLEdit" RepeatDirection="Horizontal" DataSourceID="RolesScreensEDS1" DataTextField="ScreenName" DataValueField="ID" runat="server"></asp:CheckBoxList>
-                        <asp:EntityDataSource ID="RolesScreensEDS1" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="ScreenMasters" Select="it.[ID], it.[ScreenName]">
+                        <asp:EntityDataSource ID="RolesScreensEDS1" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="ScreenMasters" Select="it.[ID], it.[ScreenName]">
                         </asp:EntityDataSource> 
                     </EditItemTemplate>
                 </asp:TemplateField>

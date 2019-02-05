@@ -1,0 +1,248 @@
+2018-10-17 11:41:43.4675 INFO Initiating user log in process
+2018-10-17 11:41:44.2570 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 11:41:44.2600 INFO Redirecting to dashboard
+2018-10-17 11:41:44.3020 INFO User not authorized to verify live transactions
+2018-10-17 11:41:44.3020 INFO Starting to build dashboard menu
+2018-10-17 11:41:44.3050 INFO Dashboard menu build successful
+2018-10-17 11:41:47.1496 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 11:42:54.3183 TRACE New screen added successfully
+2018-10-17 11:57:04.6596 INFO Initiating user log in process
+2018-10-17 11:57:05.0724 INFO User super_admin is already logged in.
+2018-10-17 11:59:59.2385 INFO Initiating user log in process
+2018-10-17 11:59:59.7235 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 11:59:59.7235 INFO Redirecting to dashboard
+2018-10-17 11:59:59.7844 INFO User not authorized to verify live transactions
+2018-10-17 11:59:59.7844 INFO Starting to build dashboard menu
+2018-10-17 11:59:59.7844 INFO Dashboard menu build successful
+2018-10-17 12:00:08.8086 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:00:23.6546 TRACE New screen added successfully
+2018-10-17 12:00:30.6362 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:19:24.3846 INFO Initiating user log in process
+2018-10-17 12:19:25.1152 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 12:19:25.1172 INFO Redirecting to dashboard
+2018-10-17 12:19:25.1631 INFO User not authorized to verify live transactions
+2018-10-17 12:19:25.1651 INFO Starting to build dashboard menu
+2018-10-17 12:19:25.1651 INFO Dashboard menu build successful
+2018-10-17 12:19:27.0788 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:20:05.6947 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:20:07.3509 INFO User not authorized to verify live transactions
+2018-10-17 12:20:07.3529 INFO Starting to build dashboard menu
+2018-10-17 12:20:07.3529 INFO Dashboard menu build successful
+2018-10-17 12:20:13.1917 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:41:16.3263 INFO Initiating user log in process
+2018-10-17 12:41:17.0430 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 12:41:17.0430 INFO Redirecting to dashboard
+2018-10-17 12:41:18.0349 INFO User not authorized to verify live transactions
+2018-10-17 12:41:18.0349 INFO Starting to build dashboard menu
+2018-10-17 12:41:18.0389 INFO Dashboard menu build successful
+2018-10-17 12:41:21.6736 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:42:14.9980 INFO Initiating user log in process
+2018-10-17 12:42:15.7975 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 12:42:15.7975 INFO Redirecting to dashboard
+2018-10-17 12:42:15.8635 INFO User not authorized to verify live transactions
+2018-10-17 12:42:15.8635 INFO Starting to build dashboard menu
+2018-10-17 12:42:15.8635 INFO Dashboard menu build successful
+2018-10-17 12:42:19.9428 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:42:37.7284 TRACE New screen added successfully
+2018-10-17 12:42:50.7420 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:54:03.0226 INFO Initiating user log in process
+2018-10-17 12:54:03.7712 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 12:54:03.7712 INFO Redirecting to dashboard
+2018-10-17 12:54:05.1165 INFO User not authorized to verify live transactions
+2018-10-17 12:54:05.1185 INFO Starting to build dashboard menu
+2018-10-17 12:54:05.1185 INFO Dashboard menu build successful
+2018-10-17 12:54:08.5602 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:57:22.6799 INFO Initiating user log in process
+2018-10-17 12:57:23.3745 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 12:57:23.3745 INFO Redirecting to dashboard
+2018-10-17 12:57:23.4285 INFO User not authorized to verify live transactions
+2018-10-17 12:57:23.4295 INFO Starting to build dashboard menu
+2018-10-17 12:57:23.4295 INFO Dashboard menu build successful
+2018-10-17 12:57:27.4169 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:57:38.5914 TRACE New screen added successfully
+2018-10-17 12:57:39.2980 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:57:54.7092 ERROR Thread was being aborted.
+2018-10-17 12:57:54.7092 ERROR    at System.Web.HttpContext.InvokeCancellableCallback(WaitCallback callback, Object state)
+   at System.Runtime.CompilerServices.TaskAwaiter.<>c__DisplayClass11_0.<OutputWaitEtwEvents>b__0()
+   at System.Threading.Tasks.SynchronizationContextAwaitTaskContinuation.<>c__DisplayClass6_0.<GetActionLogDelegate>b__0()
+   at System.Web.Util.SynchronizationHelper.SafeWrapCallback(Action action)
+2018-10-17 12:57:55.9713 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 12:58:34.4757 ERROR Thread was being aborted.
+2018-10-17 12:58:34.4767 ERROR    at System.Web.HttpContext.InvokeCancellableCallback(WaitCallback callback, Object state)
+   at System.Runtime.CompilerServices.TaskAwaiter.<>c__DisplayClass11_0.<OutputWaitEtwEvents>b__0()
+   at System.Threading.Tasks.SynchronizationContextAwaitTaskContinuation.<>c__DisplayClass6_0.<GetActionLogDelegate>b__0()
+   at System.Web.Util.SynchronizationHelper.SafeWrapCallback(Action action)
+2018-10-17 13:14:36.1610 INFO Initiating user log in process
+2018-10-17 13:14:36.8965 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 13:14:36.8985 INFO Redirecting to dashboard
+2018-10-17 13:14:36.9545 INFO User not authorized to verify live transactions
+2018-10-17 13:14:36.9545 INFO Starting to build dashboard menu
+2018-10-17 13:14:36.9545 INFO Dashboard menu build successful
+2018-10-17 13:14:40.0075 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 13:14:48.1982 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 13:14:55.9536 ERROR The file '/UserMaster.aspx' does not exist.
+2018-10-17 13:14:55.9536 ERROR    at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-17 13:15:05.4422 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 13:15:19.2294 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 13:15:41.8367 ERROR Exception of type 'System.Web.HttpUnhandledException' was thrown.
+2018-10-17 13:15:41.8367 ERROR    at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.<ProcessRequestMainAsync>d__523.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.Util.WithinCancellableCallbackTaskAwaitable.WithinCancellableCallbackTaskAwaiter.GetResult()
+   at System.Web.UI.Page.<ProcessRequestAsync>d__515.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.UI.Page.<ProcessRequestAsync>d__554.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Web.TaskAsyncHelper.EndTask(IAsyncResult ar)
+   at ASP.screensmaster_aspx.EndProcessRequest(IAsyncResult ar)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.InvokeEndHandler(IAsyncResult ar)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.OnAsyncHandlerCompletion(IAsyncResult ar)
+2018-10-17 13:15:59.8722 INFO User not authorized to verify live transactions
+2018-10-17 13:15:59.8722 INFO Starting to build dashboard menu
+2018-10-17 13:15:59.8722 INFO Dashboard menu build successful
+2018-10-17 15:07:19.4563 INFO Initiating user log in process
+2018-10-17 15:07:20.1448 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:07:20.1448 INFO Redirecting to dashboard
+2018-10-17 15:07:20.1918 INFO Starting to build dashboard menu
+2018-10-17 15:07:20.1918 INFO Dashboard menu build successful
+2018-10-17 15:07:22.3566 INFO Checking for live transaciton in database
+2018-10-17 15:07:22.8253 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin
+2018-10-17 15:11:46.2780 INFO Starting to build dashboard menu
+2018-10-17 15:11:46.2780 INFO Dashboard menu build successful
+2018-10-17 15:11:49.6550 INFO Checking for live transaciton in database
+2018-10-17 15:11:52.1673 INFO Checking for live transaciton in database
+2018-10-17 15:11:54.1912 INFO Checking for live transaciton in database
+2018-10-17 15:11:57.1739 INFO Checking for live transaciton in database
+2018-10-17 15:11:59.2192 INFO Checking for live transaciton in database
+2018-10-17 15:12:01.2365 INFO Checking for live transaciton in database
+2018-10-17 15:12:03.2525 INFO Checking for live transaciton in database
+2018-10-17 15:12:05.2683 INFO Checking for live transaciton in database
+2018-10-17 15:12:07.2873 INFO Checking for live transaciton in database
+2018-10-17 15:12:09.3190 INFO Checking for live transaciton in database
+2018-10-17 15:12:11.2063 INFO Redirecting to log in page, no user logged in
+2018-10-17 15:12:15.4349 INFO Redirecting to log in page, no user logged in
+2018-10-17 15:12:22.5813 INFO Initiating user log in process
+2018-10-17 15:12:22.6293 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:12:22.6293 INFO Redirecting to dashboard
+2018-10-17 15:12:22.6413 INFO Starting to build dashboard menu
+2018-10-17 15:12:22.6413 INFO Dashboard menu build successful
+2018-10-17 15:12:24.7273 INFO Checking for live transaciton in database
+2018-10-17 15:15:21.1191 INFO Initiating user log in process
+2018-10-17 15:15:21.8207 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:15:21.8207 INFO Redirecting to dashboard
+2018-10-17 15:15:21.8766 INFO Starting to build dashboard menu
+2018-10-17 15:15:21.8766 INFO Dashboard menu build successful
+2018-10-17 15:15:24.0336 INFO Checking for live transaciton in database
+2018-10-17 15:15:26.2140 INFO Checking for live transaciton in database
+2018-10-17 15:15:28.2698 INFO Checking for live transaciton in database
+2018-10-17 15:15:31.3045 INFO Checking for live transaciton in database
+2018-10-17 15:17:34.2864 INFO Initiating user log in process
+2018-10-17 15:17:34.9920 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:17:34.9920 INFO Redirecting to dashboard
+2018-10-17 15:17:35.0470 INFO Starting to build dashboard menu
+2018-10-17 15:17:35.0470 INFO Dashboard menu build successful
+2018-10-17 15:17:38.1912 INFO Checking for live transaciton in database
+2018-10-17 15:21:08.2626 INFO Initiating user log in process
+2018-10-17 15:21:09.0123 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:21:09.0123 INFO Redirecting to dashboard
+2018-10-17 15:21:10.0647 INFO Starting to build dashboard menu
+2018-10-17 15:21:10.0647 INFO Dashboard menu build successful
+2018-10-17 15:21:12.2401 INFO Checking for live transaciton in database
+2018-10-17 15:21:14.4460 INFO Checking for live transaciton in database
+2018-10-17 15:21:16.9922 INFO Checking for live transaciton in database
+2018-10-17 15:36:12.4059 INFO Initiating user log in process
+2018-10-17 15:36:13.2184 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:36:13.2184 INFO Redirecting to dashboard
+2018-10-17 15:36:14.8101 INFO Starting to build dashboard menu
+2018-10-17 15:36:14.8101 INFO Dashboard menu build successful
+2018-10-17 15:36:17.2560 INFO Checking for live transaciton in database
+2018-10-17 15:38:21.2028 INFO Initiating user log in process
+2018-10-17 15:38:21.2968 INFO Log in successful for go1 accessing from system: 192.168.1.160
+2018-10-17 15:38:21.2968 INFO Redirecting to dashboard
+2018-10-17 15:38:21.3268 INFO Starting to build dashboard menu
+2018-10-17 15:38:21.3268 INFO Dashboard menu build successful
+2018-10-17 15:38:23.4930 INFO Checking for live transaciton in database
+2018-10-17 15:38:23.9829 INFO Starting to build dashboard menu
+2018-10-17 15:38:23.9829 INFO Dashboard menu build successful
+2018-10-17 15:38:26.0675 INFO Checking for live transaciton in database
+2018-10-17 15:38:28.0866 INFO Checking for live transaciton in database
+2018-10-17 15:38:30.1000 INFO Checking for live transaciton in database
+2018-10-17 15:38:32.1244 INFO Checking for live transaciton in database
+2018-10-17 15:38:34.1531 INFO Checking for live transaciton in database
+2018-10-17 15:38:36.1857 INFO Checking for live transaciton in database
+2018-10-17 15:38:38.2071 INFO Checking for live transaciton in database
+2018-10-17 15:38:40.2237 INFO Checking for live transaciton in database
+2018-10-17 15:38:42.2424 INFO Checking for live transaciton in database
+2018-10-17 15:38:44.2768 INFO Checking for live transaciton in database
+2018-10-17 15:38:47.1728 INFO Checking for live transaciton in database
+2018-10-17 15:38:50.1707 INFO Checking for live transaciton in database
+2018-10-17 15:38:53.1637 INFO Checking for live transaciton in database
+2018-10-17 15:38:56.1636 INFO Checking for live transaciton in database
+2018-10-17 15:38:59.1659 INFO Checking for live transaciton in database
+2018-10-17 15:39:02.1660 INFO Checking for live transaciton in database
+2018-10-17 15:39:05.1761 INFO Checking for live transaciton in database
+2018-10-17 15:39:08.1650 INFO Checking for live transaciton in database
+2018-10-17 15:39:11.1638 INFO Checking for live transaciton in database
+2018-10-17 15:39:14.1753 INFO Checking for live transaciton in database
+2018-10-17 15:39:17.1766 INFO Checking for live transaciton in database
+2018-10-17 15:39:20.1625 INFO Checking for live transaciton in database
+2018-10-17 15:39:22.1815 INFO Checking for live transaciton in database
+2018-10-17 15:39:22.8616 INFO Starting to build dashboard menu
+2018-10-17 15:39:22.8616 INFO Dashboard menu build successful
+2018-10-17 15:39:25.1866 INFO Checking for live transaciton in database
+2018-10-17 15:39:28.1618 INFO Checking for live transaciton in database
+2018-10-17 15:39:31.1631 INFO Checking for live transaciton in database
+2018-10-17 15:39:34.1795 INFO Checking for live transaciton in database
+2018-10-17 15:39:37.1649 INFO Checking for live transaciton in database
+2018-10-17 15:39:40.1647 INFO Checking for live transaciton in database
+2018-10-17 15:39:42.9129 INFO Checking for live transaciton in database
+2018-10-17 15:40:32.7518 INFO Starting to build dashboard menu
+2018-10-17 15:40:32.7518 INFO Dashboard menu build successful
+2018-10-17 15:40:34.9895 INFO Checking for live transaciton in database
+2018-10-17 15:40:37.0689 INFO Checking for live transaciton in database
+2018-10-17 15:40:39.1796 INFO Checking for live transaciton in database
+2018-10-17 15:40:41.2794 INFO Checking for live transaciton in database
+2018-10-17 15:40:43.5571 INFO Checking for live transaciton in database
+2018-10-17 15:40:45.7708 INFO Checking for live transaciton in database
+2018-10-17 15:40:47.9316 INFO Checking for live transaciton in database
+2018-10-17 15:40:50.0514 INFO Checking for live transaciton in database
+2018-10-17 15:40:52.0912 INFO Checking for live transaciton in database
+2018-10-17 15:40:54.1770 INFO Checking for live transaciton in database
+2018-10-17 15:40:56.3178 INFO Checking for live transaciton in database
+2018-10-17 15:40:58.5945 INFO Checking for live transaciton in database
+2018-10-17 15:41:00.7842 INFO Checking for live transaciton in database
+2018-10-17 15:41:02.8530 INFO Checking for live transaciton in database
+2018-10-17 15:41:07.2973 INFO Checking for live transaciton in database
+2018-10-17 15:41:11.2762 INFO Checking for live transaciton in database
+2018-10-17 15:41:16.6166 INFO Checking for live transaciton in database
+2018-10-17 15:41:22.0890 INFO Checking for live transaciton in database
+2018-10-17 15:41:24.2497 INFO Checking for live transaciton in database
+2018-10-17 15:41:26.4914 INFO Checking for live transaciton in database
+2018-10-17 15:41:28.5902 INFO Checking for live transaciton in database
+2018-10-17 15:41:30.8020 INFO Checking for live transaciton in database
+2018-10-17 15:41:33.0407 INFO Checking for live transaciton in database
+2018-10-17 15:41:35.3683 INFO Checking for live transaciton in database
+2018-10-17 15:41:38.1677 INFO Checking for live transaciton in database
+2018-10-17 15:41:40.4984 INFO Redirecting to log in page, no user logged in
+2018-10-17 15:41:46.7874 INFO Redirecting to log in page, no user logged in
+2018-10-17 15:55:44.0416 INFO Initiating user log in process
+2018-10-17 15:55:44.9061 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-17 15:55:44.9061 INFO Redirecting to dashboard
+2018-10-17 15:55:46.7314 INFO Live transaction verification is disabled for this system.
+2018-10-17 15:55:46.7314 INFO Starting to build dashboard menu
+2018-10-17 15:55:46.7314 INFO Dashboard menu build successful
+2018-10-17 15:56:55.4601 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin

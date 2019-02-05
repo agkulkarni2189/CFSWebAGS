@@ -58,24 +58,6 @@ namespace UlaWebAgsWF {
         protected global::System.Web.UI.WebControls.Panel PageLinksContainer;
         
         /// <summary>
-        /// TransCheckUpdatePanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel TransCheckUpdatePanel;
-        
-        /// <summary>
-        /// TransCheckTimer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.Timer TransCheckTimer;
-        
-        /// <summary>
         /// PageLinksLiteral control.
         /// </summary>
         /// <remarks>

@@ -1,0 +1,234 @@
+2018-10-16 12:05:01.2948 INFO Initiating user log in process
+2018-10-16 12:05:03.7283 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 12:05:03.7283 INFO Redirecting to dashboard
+2018-10-16 12:05:05.1555 INFO User not authorized to verify live transactions
+2018-10-16 12:05:05.1555 INFO Starting to build dashboard menu
+2018-10-16 12:05:05.1555 INFO Dashboard menu build successful
+2018-10-16 12:31:18.6638 INFO Initiating user log in process
+2018-10-16 12:31:19.4974 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 12:31:19.4974 INFO Redirecting to dashboard
+2018-10-16 12:31:19.5454 INFO User not authorized to verify live transactions
+2018-10-16 12:31:19.5454 INFO Starting to build dashboard menu
+2018-10-16 12:31:19.5454 INFO Dashboard menu build successful
+2018-10-16 12:33:52.5055 INFO Initiating user log in process
+2018-10-16 12:33:53.3390 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 12:33:53.3390 INFO Redirecting to dashboard
+2018-10-16 12:33:54.6747 INFO User not authorized to verify live transactions
+2018-10-16 12:33:54.6747 INFO Starting to build dashboard menu
+2018-10-16 12:33:54.6787 INFO Dashboard menu build successful
+2018-10-16 12:47:50.3896 INFO No session set, invalid application context
+2018-10-16 12:52:13.1580 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:13.1580 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:13.1580 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:13.1580 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:13.3569 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:13.4299 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:52:13.4229 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:52:13.4229 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:52:13.4229 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:52:13.4229 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:52:15.7560 ERROR Object reference not set to an instance of an object.
+2018-10-16 12:52:17.4198 ERROR    at UlaWebAgsWF.UserAuthModule.Context_PreRequestHandlerExecute(Object sender, EventArgs e) in D:\Aniket\CFSWebAGS\UlaWebAgsWF\UlaWebAgsWF\UlaWebAgsWF\UserAuthModule.cs:line 97
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 12:58:34.6478 INFO Initiating user log in process
+2018-10-16 12:58:35.4733 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 12:58:35.4733 INFO Redirecting to dashboard
+2018-10-16 12:58:37.6518 INFO User not authorized to verify live transactions
+2018-10-16 12:58:37.6518 INFO Starting to build dashboard menu
+2018-10-16 12:58:37.6518 INFO Dashboard menu build successful
+2018-10-16 12:59:27.8058 INFO Redirecting to log in page, no user logged in
+2018-10-16 15:55:57.6840 INFO Redirecting to log in page, no user logged in
+2018-10-16 15:56:15.0341 INFO Initiating user log in process
+2018-10-16 15:56:15.5108 INFO User super_admin is already logged in.
+2018-10-16 15:56:25.7599 INFO Initiating user log in process
+2018-10-16 15:56:26.3526 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 15:56:26.3526 INFO Redirecting to dashboard
+2018-10-16 15:56:26.4226 INFO User not authorized to verify live transactions
+2018-10-16 15:56:26.4226 INFO Starting to build dashboard menu
+2018-10-16 15:56:26.4226 INFO Dashboard menu build successful
+2018-10-16 16:01:08.9550 INFO Initiating user log in process
+2018-10-16 16:01:09.4448 INFO User super_admin is already logged in.
+2018-10-16 16:01:32.0958 INFO Initiating user log in process
+2018-10-16 16:01:32.6855 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:01:32.6855 INFO Redirecting to dashboard
+2018-10-16 16:01:34.7503 INFO User not authorized to verify live transactions
+2018-10-16 16:01:34.7503 INFO Starting to build dashboard menu
+2018-10-16 16:01:34.7503 INFO Dashboard menu build successful
+2018-10-16 16:03:47.4524 INFO User not authorized to verify live transactions
+2018-10-16 16:03:47.4524 INFO Starting to build dashboard menu
+2018-10-16 16:03:47.4524 INFO Dashboard menu build successful
+2018-10-16 16:10:40.6652 INFO Initiating user log in process
+2018-10-16 16:10:41.6936 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:10:41.6966 INFO Redirecting to dashboard
+2018-10-16 16:10:44.3061 INFO User not authorized to verify live transactions
+2018-10-16 16:10:44.3061 INFO Starting to build dashboard menu
+2018-10-16 16:10:44.3061 INFO Dashboard menu build successful
+2018-10-16 16:12:28.4296 INFO User not authorized to verify live transactions
+2018-10-16 16:12:28.4296 INFO Starting to build dashboard menu
+2018-10-16 16:12:28.4296 INFO Dashboard menu build successful
+2018-10-16 16:12:31.9526 ERROR The file '/UserMaster.aspx' does not exist.
+2018-10-16 16:12:31.9606 ERROR    at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 16:12:37.0857 INFO User not authorized to verify live transactions
+2018-10-16 16:12:37.0857 INFO Starting to build dashboard menu
+2018-10-16 16:12:37.0857 INFO Dashboard menu build successful
+2018-10-16 16:22:40.2621 INFO Initiating user log in process
+2018-10-16 16:22:41.1746 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:22:41.1746 INFO Redirecting to dashboard
+2018-10-16 16:22:41.2345 INFO User not authorized to verify live transactions
+2018-10-16 16:22:41.2345 INFO Starting to build dashboard menu
+2018-10-16 16:22:41.2345 INFO Dashboard menu build successful
+2018-10-16 16:24:11.5099 INFO Initiating user log in process
+2018-10-16 16:24:12.4374 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:24:12.4374 INFO Redirecting to dashboard
+2018-10-16 16:24:13.6287 INFO User not authorized to verify live transactions
+2018-10-16 16:24:13.6287 INFO Starting to build dashboard menu
+2018-10-16 16:24:13.6327 INFO Dashboard menu build successful
+2018-10-16 16:29:07.3188 INFO Initiating user log in process
+2018-10-16 16:29:08.3032 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:29:08.3052 INFO Redirecting to dashboard
+2018-10-16 16:29:09.4846 INFO User not authorized to verify live transactions
+2018-10-16 16:29:09.4846 INFO Starting to build dashboard menu
+2018-10-16 16:29:09.4846 INFO Dashboard menu build successful
+2018-10-16 16:30:26.7674 INFO Initiating user log in process
+2018-10-16 16:30:27.7528 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:30:27.7528 INFO Redirecting to dashboard
+2018-10-16 16:30:27.8158 INFO User not authorized to verify live transactions
+2018-10-16 16:30:27.8158 INFO Starting to build dashboard menu
+2018-10-16 16:30:27.8198 INFO Dashboard menu build successful
+2018-10-16 16:35:19.7865 INFO Initiating user log in process
+2018-10-16 16:35:20.7679 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:35:20.7679 INFO Redirecting to dashboard
+2018-10-16 16:35:20.8439 INFO User not authorized to verify live transactions
+2018-10-16 16:35:20.8439 INFO Starting to build dashboard menu
+2018-10-16 16:35:20.8439 INFO Dashboard menu build successful
+2018-10-16 16:36:17.1067 ERROR The file '/UserMaster.aspx' does not exist.
+2018-10-16 16:36:17.1067 ERROR    at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 16:36:21.6921 INFO User not authorized to verify live transactions
+2018-10-16 16:36:21.6921 INFO Starting to build dashboard menu
+2018-10-16 16:36:21.6921 INFO Dashboard menu build successful
+2018-10-16 16:36:45.8803 INFO User not authorized to verify live transactions
+2018-10-16 16:36:45.8823 INFO Starting to build dashboard menu
+2018-10-16 16:36:45.8823 INFO Dashboard menu build successful
+2018-10-16 16:59:48.9517 INFO Initiating user log in process
+2018-10-16 16:59:50.0131 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 16:59:50.0131 INFO Redirecting to dashboard
+2018-10-16 16:59:50.0641 INFO User not authorized to verify live transactions
+2018-10-16 16:59:50.0641 INFO Starting to build dashboard menu
+2018-10-16 16:59:50.0641 INFO Dashboard menu build successful
+2018-10-16 17:05:36.9158 INFO User not authorized to verify live transactions
+2018-10-16 17:05:36.9158 INFO Starting to build dashboard menu
+2018-10-16 17:05:36.9158 INFO Dashboard menu build successful
+2018-10-16 17:13:34.7626 INFO Initiating user log in process
+2018-10-16 17:13:35.7001 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:13:35.7001 INFO Redirecting to dashboard
+2018-10-16 17:13:35.7681 INFO User not authorized to verify live transactions
+2018-10-16 17:13:35.7681 INFO Starting to build dashboard menu
+2018-10-16 17:13:35.7741 INFO Dashboard menu build successful
+2018-10-16 17:14:51.5378 INFO Initiating user log in process
+2018-10-16 17:14:52.4312 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:14:52.4312 INFO Redirecting to dashboard
+2018-10-16 17:14:52.5052 INFO User not authorized to verify live transactions
+2018-10-16 17:14:52.5102 INFO Starting to build dashboard menu
+2018-10-16 17:14:52.5102 INFO Dashboard menu build successful
+2018-10-16 17:17:57.5554 INFO Initiating user log in process
+2018-10-16 17:17:58.6058 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:17:58.6058 INFO Redirecting to dashboard
+2018-10-16 17:17:58.6638 INFO User not authorized to verify live transactions
+2018-10-16 17:17:58.6638 INFO Starting to build dashboard menu
+2018-10-16 17:17:58.6638 INFO Dashboard menu build successful
+2018-10-16 17:23:22.3008 INFO Initiating user log in process
+2018-10-16 17:23:23.2712 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:23:23.2732 INFO Redirecting to dashboard
+2018-10-16 17:23:24.5835 INFO User not authorized to verify live transactions
+2018-10-16 17:23:24.5855 INFO Starting to build dashboard menu
+2018-10-16 17:23:24.5855 INFO Dashboard menu build successful
+2018-10-16 17:33:51.0333 INFO Initiating user log in process
+2018-10-16 17:33:52.0148 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:33:52.0148 INFO Redirecting to dashboard
+2018-10-16 17:33:52.0807 INFO User not authorized to verify live transactions
+2018-10-16 17:33:52.0807 INFO Starting to build dashboard menu
+2018-10-16 17:33:52.0807 INFO Dashboard menu build successful
+2018-10-16 17:38:18.0347 INFO Initiating user log in process
+2018-10-16 17:38:18.9442 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:38:18.9462 INFO Redirecting to dashboard
+2018-10-16 17:38:19.0021 INFO User not authorized to verify live transactions
+2018-10-16 17:38:19.0021 INFO Starting to build dashboard menu
+2018-10-16 17:38:19.0021 INFO Dashboard menu build successful
+2018-10-16 17:40:05.1615 INFO User super_adminhas no access to LanesMaster module, redirecting to log in page
+2018-10-16 17:40:05.1635 INFO User not authorized to verify live transactions
+2018-10-16 17:40:05.1635 INFO Starting to build dashboard menu
+2018-10-16 17:40:05.1635 INFO Dashboard menu build successful
+2018-10-16 17:55:02.1748 INFO Initiating user log in process
+2018-10-16 17:55:03.2812 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:55:03.2812 INFO Redirecting to dashboard
+2018-10-16 17:55:03.3392 INFO User not authorized to verify live transactions
+2018-10-16 17:55:03.3392 INFO Starting to build dashboard menu
+2018-10-16 17:55:03.3392 INFO Dashboard menu build successful
+2018-10-16 17:57:01.6485 INFO Redirecting to log in page, no user logged in
+2018-10-16 17:57:10.7154 INFO Initiating user log in process
+2018-10-16 17:57:11.7488 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 17:57:11.7488 INFO Redirecting to dashboard
+2018-10-16 17:57:11.8097 INFO User not authorized to verify live transactions
+2018-10-16 17:57:11.8097 INFO Starting to build dashboard menu
+2018-10-16 17:57:11.8097 INFO Dashboard menu build successful
+2018-10-16 17:58:21.6838 INFO User not authorized to verify live transactions
+2018-10-16 17:58:21.6838 INFO Starting to build dashboard menu
+2018-10-16 17:58:21.6838 INFO Dashboard menu build successful
+2018-10-16 18:01:43.7653 INFO Initiating user log in process
+2018-10-16 18:01:44.7147 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-16 18:01:44.7147 INFO Redirecting to dashboard
+2018-10-16 18:01:44.7747 INFO User not authorized to verify live transactions
+2018-10-16 18:01:44.7747 INFO Starting to build dashboard menu
+2018-10-16 18:01:44.7747 INFO Dashboard menu build successful
+2018-10-16 18:02:25.6233 INFO User not authorized to verify live transactions
+2018-10-16 18:02:25.6233 INFO Starting to build dashboard menu
+2018-10-16 18:02:25.6233 INFO Dashboard menu build successful
+2018-10-16 18:02:54.2570 ERROR The file '/UserMaster.aspx' does not exist.
+2018-10-16 18:02:54.2570 ERROR    at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+2018-10-16 18:02:56.1819 INFO User not authorized to verify live transactions
+2018-10-16 18:02:56.1819 INFO Starting to build dashboard menu
+2018-10-16 18:02:56.1819 INFO Dashboard menu build successful
+2018-10-16 18:03:13.3930 INFO User not authorized to verify live transactions
+2018-10-16 18:03:13.3930 INFO Starting to build dashboard menu
+2018-10-16 18:03:13.3930 INFO Dashboard menu build successful

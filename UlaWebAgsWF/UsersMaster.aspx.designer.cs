@@ -94,6 +94,15 @@ namespace UlaWebAgsWF {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldNewUserFN;
         
         /// <summary>
+        /// RegularExpressionValidatorNewUserFN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorNewUserFN;
+        
+        /// <summary>
         /// NewUserLN control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace UlaWebAgsWF {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldNewUserLN;
+        
+        /// <summary>
+        /// RegularExpressionValidatorNewUserLN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidatorNewUserLN;
         
         /// <summary>
         /// NewUserCN control.
@@ -166,22 +184,13 @@ namespace UlaWebAgsWF {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionNewUserEmail;
         
         /// <summary>
-        /// NewUserDesignation control.
+        /// UserDesignationDD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NewUserDesignation;
-        
-        /// <summary>
-        /// RequiredFieldDesignation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldDesignation;
+        protected global::System.Web.UI.WebControls.DropDownList UserDesignationDD;
         
         /// <summary>
         /// NewUserUserName control.
@@ -227,15 +236,6 @@ namespace UlaWebAgsWF {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldNewUserPassword;
-        
-        /// <summary>
-        /// UserRolesDD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList UserRolesDD;
         
         /// <summary>
         /// UserActiveCB control.

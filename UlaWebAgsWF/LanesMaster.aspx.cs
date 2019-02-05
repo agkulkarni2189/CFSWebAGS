@@ -10,29 +10,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DIMSContainerDBEFDLL;
+using NLog;
 
 namespace UlaWebAgsWF
 {
     public partial class LanesMaster : System.Web.UI.Page, IWebAGSClass
     {
-        DIMContainerDB_RevisedEntities dcde = null;
+        DIMContainerDB_Revised_DevEntities dcde = null;
         private string ErrorMsg = string.Empty;
-        private List<sp_GetScreensFromRoleID_Result> UserAccessibleScreens = null;
-        private DIMSContainerDBEFDLL.UserMaster LoggedInUser = null;
         private static ConcurrentDictionary<int, LaneMaster> LanesDictionary = null;
+        private static Logger logger = LogManager.GetLogger("LaneMasterLogger", typeof(LaneMaster));
 
         protected void Page_Load(object sender, EventArgs e)
         {
             ClearMessages();
-            //UserAccessibleScreens = (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"];
-            //LoggedInUser = (UserMaster)HttpContext.Current.Session["LoggedInUser"];
-            dcde = new DIMContainerDB_RevisedEntities();
+  
+            dcde = new DIMContainerDB_Revised_DevEntities();
 
-            //if (HttpContext.Current.Session["LoggedInUser"] == null || !((DIMSContainerDBEFDLL.UserMaster)Session["LoggedInUser"]).IsLoggedin)
-            //{
-            //    HttpContext.Current.Session["ErrorMsg"] = "No user logged in";
-            //    Response.Redirect("Login.aspx", true);
-            //}
+            logger.Trace(new LogMessageGenerator(() => {
+                return "Loading lanes master from system: " + HttpContext.Current.Session["SysIP"] + " accessed by " + ((DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).UserName;
+            }));
 
             if (!IsPostBack)
             {
@@ -52,15 +49,6 @@ namespace UlaWebAgsWF
 
                 Fill_LanesDGV();
             }
-
-            //using (UserAuthorization UAuth = new UserAuthorization(ref LoggedInUser, ref UserAccessibleScreens))
-            //{
-            //    if (!UAuth.canUserAccessPage(Request.Url.AbsolutePath, ref LoggedInUser))
-            //    {
-            //        HttpContext.Current.Session["ErrorMsg"] = "User " + LoggedInUser.UserName + " has no access to Lanes module";
-            //        Response.Redirect("Default.aspx", true);
-            //    }
-            //}
         }
 
         private void ClearMessages()
@@ -80,15 +68,21 @@ namespace UlaWebAgsWF
 
         protected void LanesDGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            LaneMaster Lane = null;
+
             try
             {
                 GridViewRow LaneGridViewRow = LanesDGV.Rows[e.RowIndex];
                 int LaneID = Int32.Parse(LanesDGV.DataKeys[e.RowIndex].Value.ToString());
 
-                LaneMaster Lane = dcde.LaneMasters.Where(a => a.LaneID == LaneID).First();
+                Lane = dcde.LaneMasters.Where(a => a.LaneID == LaneID).First();
+
+                logger.Trace(new LogMessageGenerator(() => {
+                    return "Updating lane: "+Lane.LaneName;
+                }));
 
                 Lane.LaneName = ((TextBox)LaneGridViewRow.FindControl("LaneNameTBX")).Text;
-                Lane.SystemIP = ((TextBox)LaneGridViewRow.FindControl("LaneSystemIPTBX")).Text;
+                //Lane.SystemIP = ((TextBox)LaneGridViewRow.FindControl("LaneSystemIPTBX")).Text;
 
                 if (dcde.SaveChanges() > 0)
                 {
@@ -103,14 +97,12 @@ namespace UlaWebAgsWF
                 LanesDGV.EditIndex = -1;
                 Fill_LanesDGV();
                 ClearMessages();
-                SuccessMsgText.Text = "Lane updated successfully";
-                SuccessMsg.Visible = true;
+                //SuccessMsgText.Text = "Lane updated successfully";
+                //SuccessMsg.Visible = true;
             }
             catch (Exception ex)
             {
-                ClearMessages();
-                FailureMsgText.Text = "Lane edition failed, try later or contact system admin";
-                FailureMsg.Visible = true;
+                throw ex;
             }
         }
 
@@ -139,6 +131,11 @@ namespace UlaWebAgsWF
             {
                 int LaneID = Int32.Parse(LanesDGV.DataKeys[e.RowIndex].Value.ToString());
                 List<LaneMaster> Lanes = dcde.LaneMasters.Where(b => b.LaneID == LaneID).Select(c => c).ToList<LaneMaster>();
+
+                logger.Trace(new LogMessageGenerator(() => {
+                    return "Deleting lane: " + Lanes[0].LaneName;
+                }));
+
                 if (Lanes.Count > 0)
                 {
                     dcde.LaneMasters.Remove(Lanes.First());
@@ -159,9 +156,7 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-                ClearMessages();
-                FailureMsgText.Text = "Lane deletion failed, try later or contact system admin";
-                FailureMsg.Visible = true;
+                throw ex;
             }
         }
 
@@ -170,6 +165,10 @@ namespace UlaWebAgsWF
             ClearMessages();
             SuccessMsgText.Text = "Lane updated successfully";
             SuccessMsg.Visible = true;
+
+            logger.Trace(new LogMessageGenerator(() => {
+                return "Lane updated successfully";
+            }));
         }
 
         protected void LanesDGV_RowDeleted(object sender, GridViewDeletedEventArgs e)
@@ -177,14 +176,23 @@ namespace UlaWebAgsWF
             ClearMessages();
             SuccessMsgText.Text = "Lane deleted successfully";
             SuccessMsg.Visible = true;
+
+            logger.Trace(new LogMessageGenerator(() => {
+                return "Lane deleted successfully";
+            }));
         }
 
         protected void NewLaneBtnSubmit_Click(object sender, EventArgs e)
         {
+
+            logger.Trace(new LogMessageGenerator(() => {
+                return "Creating new lane";
+            }));
+
             LaneMaster Lane = new LaneMaster();
 
             Lane.LaneName = NewLaneName.Text;
-            Lane.SystemIP = LaneSystemIP.Text;
+            //Lane.SystemIP = LaneSystemIP.Text;
 
             NewLaneName.Text = string.Empty;
             LaneSystemIP.Text = string.Empty;
@@ -192,11 +200,9 @@ namespace UlaWebAgsWF
             dcde.LaneMasters.Add(Lane);
             if (dcde.SaveChanges() > 0)
             {
-                LaneMaster AddedLane = dcde.LaneMasters.OrderByDescending(a => a.LaneID).First();
-
                 Task task = new Task(new Action(() => {
-                    while (!LanesDictionary.TryAdd(AddedLane.LaneID, AddedLane))
-                        LanesDictionary.TryAdd(AddedLane.LaneID, AddedLane);
+                    while (!LanesDictionary.TryAdd(Lane.LaneID, Lane))
+                        LanesDictionary.TryAdd(Lane.LaneID, Lane);
                 }), TaskCreationOptions.AttachedToParent);
 
                 task.Start();
@@ -206,6 +212,11 @@ namespace UlaWebAgsWF
             ClearMessages();
             SuccessMsgText.Text = "Lane added successfully";
             SuccessMsg.Visible = true;
+
+
+            logger.Trace(new LogMessageGenerator(() => {
+                return "Lane " + Lane.LaneName + " created successfully";
+            }));
         }
 
         public void SetMessage(string Message)

@@ -49,14 +49,14 @@
                         <asp:TextBox ID="LaneNameTBX" runat="server" CssClass="form-control" Text='<%# Bind("LaneName") %>' />
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Lane System IP" HeaderStyle-CssClass="text-center" SortExpression="SystemIPAddress">
+                <%--<asp:TemplateField HeaderText="Lane System IP" HeaderStyle-CssClass="text-center" SortExpression="SystemIPAddress">
                     <ItemTemplate>
                         <asp:Label ID="LaneSystemIPText" runat="server" Text='<%# Bind("SystemIP") %>' />
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:TextBox ID="LaneSystemIPTBX" runat="server" CssClass="form-control" Text='<%# Bind("SystemIP") %>' />
                     </EditItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
                 <asp:CommandField CausesValidation="false" ShowEditButton="true" ShowDeleteButton="true" DeleteText="Delete" EditText="Edit" />
             </Columns>
         </asp:GridView>  

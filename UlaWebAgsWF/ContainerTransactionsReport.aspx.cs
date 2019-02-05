@@ -8,32 +8,22 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using DIMSContainerDBEFDLL.EntityProxies;
 using DIMSContainerDBEFDLL;
 
 namespace UlaWebAgsWF
 {
-    public partial class ContainerTransactionsReport : System.Web.UI.Page, IWebAGSClass
+    public partial class ContainerTransactionProxysReport : System.Web.UI.Page, IWebAGSClass
     {
-        private DIMContainerDB_RevisedEntities dcde = null;
+        private DIMContainerDB_Revised_DevEntities dcde = null;
         private DataTable ContainerTransDGVDT = null;
         private string ErrorMsg = string.Empty;
         private List<sp_GetScreensFromRoleID_Result> UserAccessibleScreens = null;
-        private DIMSContainerDBEFDLL.UserMaster LoggedInUser = null;
+        private UserMasterProxy LoggedInUser = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //UserAccessibleScreens = (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"];
-            //LoggedInUser = (UserMaster)HttpContext.Current.Session["LoggedInUser"];
-            dcde = new DIMContainerDB_RevisedEntities();
-
-            //if (HttpContext.Current.Session["LoggedInUser"] == null || !((DIMSContainerDBEFDLL.UserMaster)Session["LoggedInUser"]).IsLoggedin)
-            //{
-            //    HttpContext.Current.Session["ErrorMsg"] = "No user logged in";
-            //    Response.Redirect("Login.aspx", true);
-            //    //this.SetMessage("No user logged in");
-            //    //new SiteMaster().LinkLogout_Click(this, new EventArgs());
-            //}
+            dcde = new DIMContainerDB_Revised_DevEntities();
 
             if (!IsPostBack)
             {
@@ -43,22 +33,11 @@ namespace UlaWebAgsWF
 
                 this.Page.Title = "Transactions History";
                 HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] = true;
-                FillContainerTransactionGV(FilterContainerTransDGVData(true));
+                FillContainerTransactionProxyGV(FilterContainerTransDGVData(true));
             }
-
-            //using (UserAuthorization UAuth = new UserAuthorization(ref LoggedInUser, ref UserAccessibleScreens))
-            //{
-            //    if (!UAuth.canUserAccessPage(Request.Url.AbsolutePath, ref LoggedInUser))
-            //    {
-            //        HttpContext.Current.Session["ErrorMsg"] = "User " + LoggedInUser.UserName + " has no access to Container Transactions History module";
-            //        Response.Redirect("Default.aspx", true);
-            //        //this.SetMessage("Logged in user is not authorized to access User Master");
-            //        //new SiteMaster().RedirectHomePage(this, new EventArgs());
-            //    }
-            //}
         }
 
-        protected List<ContainerTransaction> FilterContainerTransDGVData(bool IsOnlyPrevDayDataRequired)
+        protected List<ContainerTransactionProxy> FilterContainerTransDGVData(bool IsOnlyPrevDayDataRequired)
         {
             bool Damaged = false;
 
@@ -94,11 +73,11 @@ namespace UlaWebAgsWF
 
             if (HttpContext.Current.Session["ContainerTrans"] != null)
             {
-                List<ContainerTransaction> ContainerTrans = new List<ContainerTransaction>();
-                ContainerTrans = HttpContext.Current.Session["ContainerTrans"] as List<ContainerTransaction>;
+                List<ContainerTransactionProxy> ContainerTrans = new List<ContainerTransactionProxy>();
+                ContainerTrans = HttpContext.Current.Session["ContainerTrans"] as List<ContainerTransactionProxy>;
 
                 if (ContainerTrans.Count > 0)
-                    return (List<ContainerTransaction>)HttpContext.Current.Session["ContainerTrans"];
+                    return (List<ContainerTransactionProxy>)HttpContext.Current.Session["ContainerTrans"];
             }
 
             var FilterQuery = from ct in dcde.ContainerTransactions select ct;
@@ -155,7 +134,7 @@ namespace UlaWebAgsWF
 
             FilterQuery = FilterQuery.OrderByDescending(a => a.TransID);
 
-            List<ContainerTransaction> FilteredTrans = FilterQuery.ToList<ContainerTransaction>();
+            List<ContainerTransactionProxy> FilteredTrans = (List<ContainerTransactionProxy>)FilterQuery;
             HttpContext.Current.Session["ContainerTrans"] = FilteredTrans;
 
             return FilteredTrans;
@@ -163,7 +142,7 @@ namespace UlaWebAgsWF
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            FillContainerTransactionGV(FilterContainerTransDGVData(false));
+            FillContainerTransactionProxyGV(FilterContainerTransDGVData(false));
 
             HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] = false;
 
@@ -177,7 +156,7 @@ namespace UlaWebAgsWF
             HttpContext.Current.Session.Remove("ContainerTrans");
         }
 
-        protected void FillContainerTransactionGV(List<ContainerTransaction> ContTrans)
+        protected void FillContainerTransactionProxyGV(List<ContainerTransactionProxy> ContTrans)
         {
             string damaged = HttpContext.Current.Session["Damaged"] as string;
             if (!string.IsNullOrEmpty(HttpContext.Current.Session["Damaged"] as string))
@@ -220,7 +199,7 @@ namespace UlaWebAgsWF
 
             if (ContTrans.Count > 0)
             {
-                foreach (ContainerTransaction ct in ContTrans)
+                foreach (ContainerTransactionProxy ct in ContTrans)
                 {
                     DataRow dr = ContainerTransDGVDT.NewRow();
                     dr["T. ID"] = ct.TransID.ToString();
@@ -251,7 +230,7 @@ namespace UlaWebAgsWF
         protected void ContainerTransDGV_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             ContainerTransDGV.PageIndex = e.NewPageIndex;
-            FillContainerTransactionGV(FilterContainerTransDGVData((!string.IsNullOrEmpty(HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] as string) && Boolean.Parse(HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] as string)) ? true : false));
+            FillContainerTransactionProxyGV(FilterContainerTransDGVData((!string.IsNullOrEmpty(HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] as string) && Boolean.Parse(HttpContext.Current.Session["IsOnlyPreviousDayDataRequired"] as string)) ? true : false));
         }
 
         public void SetMessage(string Message)

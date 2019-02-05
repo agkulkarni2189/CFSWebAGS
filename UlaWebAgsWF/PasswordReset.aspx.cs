@@ -1,4 +1,5 @@
 ﻿using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,14 @@ namespace UlaWebAgsWF
 {
     public partial class PasswordReset : System.Web.UI.Page
     {
-        private DIMContainerDB_RevisedEntities dcre = null;
-        private UserMaster FirstLoggedInUser = null;
+        private DIMContainerDB_Revised_DevEntities dcre = null;
+        private UserMasterProxy FirstLoggedInUser = null;
         private ServerUtilities utilities = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            dcre = new DIMContainerDB_RevisedEntities();
-            FirstLoggedInUser = (UserMaster)HttpContext.Current.Session["LoggedInUser"];
+            dcre = new DIMContainerDB_Revised_DevEntities();
+            FirstLoggedInUser = (UserMasterProxy)HttpContext.Current.Session["LoggedInUser"];
             utilities = new ServerUtilities();
 
             if (!IsPostBack)
@@ -30,10 +31,10 @@ namespace UlaWebAgsWF
         {
             if (Page.IsValid)
             {
-                UserMaster UserFromDB = dcre.UserMasters.Where(a => a.UserId.Equals(FirstLoggedInUser.UserId)).FirstOrDefault();
+                UserMasterProxy UserFromDB = (UserMasterProxy)dcre.UserMasters.Where(a => a.UserId.Equals(FirstLoggedInUser.UserId)).FirstOrDefault();
                 UserFromDB.Password = utilities.GetEncryptedMessage(NewPassword.Text);
                 dcre.SaveChanges();
-                HttpContext.Current.Session.Remove("PasswordResetRequest");
+                HttpContext.Current.Session["PasswordResetRequest"] = "false";
                 HttpContext.Current.Session["SuccessMsg"] = "Password reset successful";
                 Response.Redirect("Default.aspx", true);
             }

@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,47 +18,26 @@ namespace UlaWebAgsWF
 {
     public partial class UsersMaster : System.Web.UI.Page, IWebAGSClass
     {
-        private DIMContainerDB_RevisedEntities dcde = null;
+        private DIMContainerDB_Revised_DevEntities dcde = null;
         private string ErrorMsg = string.Empty;
         private static ConcurrentDictionary<int, User> UsersList = null;
         private ServerUtilities utilities = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            dcde = new DIMContainerDB_RevisedEntities();
+            dcde = new DIMContainerDB_Revised_DevEntities();
 
             utilities = new ServerUtilities();
 
             if (!IsPostBack)
             {
-                List<User> Users = (from
-                                        um in dcde.UserMasters
-                                    join
-                                        rm in dcde.RoleMasters
-                                    on
-                                        um.RoleID equals rm.ID
-                                    select new User
-                                    {
-                                        UserId = um.UserId,
-                                        FirstName = um.FirstName,
-                                        LastName = um.LastName,
-                                        ContactNo = um.ContactNo,
-                                        EmailId = um.EmailId,
-                                        Designation = um.Designation,
-                                        Role = rm.RoleName,
-                                        isUserActive = um.IsActive
-                                    }).ToList<User>();
-
-
+                List<User> Users = dcde.UserMasters.Join(dcde.DesignationMasters, um => um.DesignationID, dm => dm.ID, (um, dm) => new { um, dm }).Select(u => new UlaWebAgsWF.User { UserId = u.um.UserId, FirstName = u.um.FirstName, LastName = u.um.LastName, ContactNo = u.um.ContactNo, Designation = u.dm.DesignationName, DesignationID = u.dm.ID, EmailId = u.um.EmailId, isUserActive = u.um.IsActive, UserName = u.um.UserName }).ToList<User>();
                 UsersList = new ConcurrentDictionary<int, UlaWebAgsWF.User>();
-                foreach (User user in Users)
-                {
-                    UsersList.TryAdd(user.UserId, user);
-                }
-
+                Users.ForEach(new Action<UlaWebAgsWF.User>((u) => { UsersList.TryAdd(u.UserId, u); }));
+     
                 this.Page.Title = "User Master";
                 Fill_UsersDGV();
-                FillRolesDD();
+                FillDesignationDD();
             }
         }
 
@@ -89,14 +69,14 @@ namespace UlaWebAgsWF
             }
         }
 
-        private void FillRolesDD()
+        private void FillDesignationDD()
         {
-            UserRolesDD.DataTextField = "RoleName";
-            UserRolesDD.DataValueField = "ID";
-            List<DIMSContainerDBEFDLL.RoleMaster> Roles = dcde.RoleMasters.ToList<DIMSContainerDBEFDLL.RoleMaster>();
+            UserDesignationDD.DataTextField = "DesignationName";
+            UserDesignationDD.DataValueField = "ID";
+            List<DIMSContainerDBEFDLL.DesignationMaster> Designations = dcde.DesignationMasters.ToList<DIMSContainerDBEFDLL.DesignationMaster>();
 
-            UserRolesDD.DataSource = Roles;
-            UserRolesDD.DataBind();
+            UserDesignationDD.DataSource = Designations;
+            UserDesignationDD.DataBind();
         }
 
         protected void UsersDGV_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -123,33 +103,41 @@ namespace UlaWebAgsWF
             {
                 int UserID = Int32.Parse(UsersDGV.DataKeys[e.RowIndex].Value.ToString());
 
-                UserMaster UserToBeDeleted = dcde.UserMasters.Where(a => a.UserId == UserID).First();
+                DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy UserToBeDeleted = (DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)dcde.UserMasters.Where(a => a.UserId == UserID).First();
                 UlaWebAgsWF.User user = new UlaWebAgsWF.User();
 
-                dcde.UserMasters.Remove(UserToBeDeleted);
-
-                if (dcde.SaveChanges() > 0)
+                if (UserToBeDeleted.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser != null && (bool)UserToBeDeleted.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser && dcde.UserMasters.Where(a => a.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser == true).Count() <= 1)
                 {
-                    Task task = new Task(new Action(() => {
-                        while (UsersList.TryRemove(UserToBeDeleted.UserId, out user))
-                            UsersList.TryRemove(UserToBeDeleted.UserId, out user);
-                    }), TaskCreationOptions.AttachedToParent);
-
-                    task.Start();
-                    task.Wait();
-                    ClearMessages();
-                    SuccessMsgTxt.Text = "User deleted successfully";
-                    SuccessMsgTxt.Visible = true;
-                    SuccessMsg.Visible = true;
+                    FailureMsgTxt.Text = "Can not delete last super user";
+                    FailureMsgTxt.Visible = true;
+                    FailureMsg.Visible = true;
                 }
-             
-                Fill_UsersDGV();
+                else
+                {
+                    dcde.UserMasters.Remove(UserToBeDeleted);
+
+                    if (dcde.SaveChanges() > 0)
+                    {
+                        Task task = new Task(new Action(() =>
+                        {
+                            while (UsersList.TryRemove(UserToBeDeleted.UserId, out user))
+                                UsersList.TryRemove(UserToBeDeleted.UserId, out user);
+                        }), TaskCreationOptions.AttachedToParent);
+
+                        task.Start();
+                        task.Wait();
+                        ClearMessages();
+                        SuccessMsgTxt.Text = "User deleted successfully";
+                        SuccessMsgTxt.Visible = true;
+                        SuccessMsg.Visible = true;
+                    }
+
+                    Fill_UsersDGV();
+                }
             }
             catch (Exception ex)
             {
-                FailureMsgTxt.Text = "Failed to delete user. Try again or contact system administrator";
-                FailureMsgTxt.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, "Failed to delete the user due to unexpected error", ex);
             }
         }
 
@@ -172,45 +160,27 @@ namespace UlaWebAgsWF
             {
                 if (Page.IsValid)
                 {
-                    var userStore = new UserStore<IdentityUser>();
-                    var manager = new UserManager<IdentityUser>(userStore);
-                    var user = new IdentityUser() { UserName = NewUserUserName.Text };
-                    IdentityResult result = manager.Create(user, new PasswordHasher().HashPassword(NewUserPassword.Text));
-
-                    if (result.Succeeded)
-                    {
-                        SuccessMsgTxt.Text = "User created Successfully";
-                        SuccessMsgTxt.Visible = true;
-                        SuccessMsg.Visible = true;
-                        CreateNewUserPanel.Visible = false;
-                    }
-                    else
-                    {
-                        FailureMsgTxt.Text = result.Errors.FirstOrDefault();
-                        FailureMsgTxt.Visible = true;
-                        FailureMsg.Visible = true;
-                    }
-
+                    UserMasterProxy LoggedInUser = (UserMasterProxy)HttpContext.Current.Session["LoggedInUser"];
                     string NewUserFirstName = NewUserFN.Text;
                     string NewUserLastName = NewUserLN.Text;
                     string NewUserContactNumber = NewUserCN.Text;
                     string NewUserMailID = NewUserEmail.Text;
-                    string NewUserDesig = NewUserDesignation.Text;
+                    int DesignationID = Int32.Parse(UserDesignationDD.SelectedValue);
                     string NewUserUN = NewUserUserName.Text;
                     string NewUserpass = utilities.GetEncryptedMessage(NewUserPassword.Text);
-                    int RoleID = Int32.Parse(UserRolesDD.SelectedValue);
 
                     bool isUserActive = false;
+                    bool? IsRoleSuperUser = dcde.DesignationMasters.Where(a => a.ID.Equals(DesignationID)).FirstOrDefault().RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser;//dcde.RoleMasters.Where(a => a.ID.Equals(RoleID)).Select(b => b.IsSuperUser).FirstOrDefault();
 
-                    if (RoleID == 1)
+                    if (IsRoleSuperUser != null && (bool)IsRoleSuperUser)
                         isUserActive = true;
                     else
                         isUserActive = UserActiveCB.Checked;
 
-                    dcde.UserMasters.Add(new UserMaster() { FirstName = NewUserFirstName, LastName = NewUserLastName, ContactNo = NewUserContactNumber, EmailId = NewUserMailID, Designation = NewUserDesig, UserName = NewUserUN, Password = NewUserpass, RoleID = RoleID, IsActive = isUserActive });
+                    dcde.UserMasters.Add(new UserMaster() { FirstName = NewUserFirstName, LastName = NewUserLastName, ContactNo = NewUserContactNumber, EmailId = NewUserMailID, DesignationID = DesignationID, UserName = NewUserUN, Password = NewUserpass, IsActive = isUserActive });
                     if (dcde.SaveChanges() > 0)
                     {
-                        User NewUser = dcde.UserMasters.Join(dcde.RoleMasters.AsEnumerable(), a => a.RoleID, b => b.ID, (a, b) => new User { UserId = a.UserId, FirstName = a.FirstName, LastName = a.LastName, ContactNo = a.ContactNo, Designation = a.Designation, EmailId = a.EmailId, Role = b.RoleName, UserName = a.UserName, RoleID = a.RoleID, isUserActive = isUserActive }).OrderByDescending(a => a.UserId).First();
+                        User NewUser = dcde.UserMasters.Join(dcde.RoleMasters.AsEnumerable(), a => a.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleID, b => b.ID, (a, b) => new User { UserId = a.UserId, FirstName = a.FirstName, LastName = a.LastName, ContactNo = a.ContactNo, Designation = a.DesignationMaster.DesignationName, DesignationID = (int)a.DesignationID, EmailId = a.EmailId, UserName = a.UserName, isUserActive = isUserActive }).OrderByDescending(a => a.UserId).First();
 
                         Task task = new Task(new Action(() =>
                         {
@@ -223,7 +193,7 @@ namespace UlaWebAgsWF
                         SuccessMsgTxt.Text = "User created Successfully";
                         SuccessMsgTxt.Visible = true;
                         SuccessMsg.Visible = true;
-                        CreateNewUserPanel.Visible = false;
+                        //CreateNewUserPanel.Visible = false;
                     }
 
                     Fill_UsersDGV();
@@ -231,10 +201,7 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-                ClearMessages();
-                FailureMsgTxt.Text = "Failed to create user. Try again or contact system administrator";
-                FailureMsgTxt.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, "Failed to create user. Try again or contact system administrator", ex);
             }
         }
 
@@ -260,18 +227,22 @@ namespace UlaWebAgsWF
                 GridViewRow UserRow = UsersDGV.Rows[RowIndex];
                 int UserID = Int32.Parse(UsersDGV.DataKeys[e.RowIndex].Value.ToString());
 
-                UserMaster UserToBeEdited = (from user in dcde.UserMasters where user.UserId == UserID select user).First();
+                UserMasterProxy UserToBeEdited = (DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)(from user in dcde.UserMasters where user.UserId == UserID select user).First();
 
                 TableCellCollection cc = UserRow.Cells;
                 UserToBeEdited.FirstName = ((TextBox)UserRow.FindControl("FirstNameTextBox")).Text;
                 UserToBeEdited.LastName = ((TextBox)UserRow.FindControl("LastNameTextBox")).Text;
                 UserToBeEdited.ContactNo = ((TextBox)UserRow.FindControl("ContactNoTextBox")).Text;
                 UserToBeEdited.EmailId = ((TextBox)UserRow.FindControl("EmailIdTextBox")).Text;
-                UserToBeEdited.Designation = ((TextBox)UserRow.FindControl("DesignationTextBox")).Text;
-                UserToBeEdited.RoleID = Int32.Parse(((DropDownList)UserRow.FindControl("UserDGVRoleDD")).SelectedValue);
-                UserToBeEdited.IsActive = ((CheckBox)UserRow.FindControl("UserAcitve")).Checked;
+                UserToBeEdited.DesignationID = Int32.Parse(((DropDownList)UserRow.FindControl("UserDGVDesignationDD")).SelectedValue);
 
-                User UpdatedUser = new UlaWebAgsWF.User(UserID, ((TextBox)UserRow.FindControl("FirstNameTextBox")).Text, ((TextBox)UserRow.FindControl("LastNameTextBox")).Text, ((TextBox)UserRow.FindControl("ContactNoTextBox")).Text, ((TextBox)UserRow.FindControl("EmailIdTextBox")).Text, ((TextBox)UserRow.FindControl("DesignationTextBox")).Text, ((DropDownList)UserRow.FindControl("UserDGVRoleDD")).SelectedItem.Text.ToString(), Int32.Parse(((DropDownList)UserRow.FindControl("UserDGVRoleDD")).SelectedItem.Value), ((CheckBox)UserRow.FindControl("UserAcitve")).Checked);
+                if (UserToBeEdited.DesignationID != null && (bool)UserToBeEdited.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser && dcde.UserMasters.Where(a => a.DesignationMaster.RoleDesignationMappingMasters.FirstOrDefault().RoleMaster.IsSuperUser == true && a.IsActive == true).Count() <= 1 && !((CheckBox)UserRow.FindControl("UserAcitve")).Checked)
+                    UserToBeEdited.IsActive = true;
+                else
+                    UserToBeEdited.IsActive = ((CheckBox)UserRow.FindControl("UserAcitve")).Checked;
+
+
+                User UpdatedUser = new UlaWebAgsWF.User(UserID, ((TextBox)UserRow.FindControl("FirstNameTextBox")).Text, ((TextBox)UserRow.FindControl("LastNameTextBox")).Text, ((TextBox)UserRow.FindControl("ContactNoTextBox")).Text, ((TextBox)UserRow.FindControl("EmailIdTextBox")).Text, ((DropDownList)UserRow.FindControl("UserDGVDesignationDD")).SelectedItem.Text, Int32.Parse(((DropDownList)UserRow.FindControl("UserDGVDesignationDD")).SelectedValue), ((CheckBox)UserRow.FindControl("UserAcitve")).Checked);
 
                 if (dcde.SaveChanges() > 0)
                 {
@@ -290,10 +261,7 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-                ClearMessages();
-                FailureMsgTxt.Text = "Failed to update user. Try again or contact system administrator";
-                FailureMsgTxt.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, "Failed to update user. Try again or contact system administrator", ex);
             }
         }
 
@@ -317,14 +285,13 @@ namespace UlaWebAgsWF
         public string ContactNo { get; set; }
         public string EmailId { get; set; }
         public string Designation { get; set; }
-        public string Role { get; set; }
-        public int RoleID { get; set; }
+        public int DesignationID { get; set; }
         public bool isUserActive { get; set; }
 
         public User()
         { }
 
-        public User(int UserID, string FirstName, string LastName, string ContactNo, string EmailID, string Designation, string Role,int RoleID, bool isUserActive, string UserName = "") : this()
+        public User(int UserID, string FirstName, string LastName, string ContactNo, string EmailID, string Designation, int DesignationID, bool isUserActive, string UserName = "") : this()
         {
             this.UserId = UserID;
             this.FirstName = FirstName;
@@ -332,8 +299,7 @@ namespace UlaWebAgsWF
             this.ContactNo = ContactNo;
             this.EmailId = EmailID;
             this.Designation = Designation;
-            this.Role = Role;
-            this.RoleID = RoleID;
+            this.DesignationID = DesignationID;
             this.isUserActive = isUserActive;
 
             if (!string.IsNullOrEmpty(UserName))
@@ -345,7 +311,7 @@ namespace UlaWebAgsWF
             bool isUserEqual = false;
             try
             {
-                if (obj1 != null && obj1.GetType().Equals(this.GetType()))
+                if (obj1 != null && obj1.GetType().Equals(typeof(User)) && ((User)obj1).FirstName.Equals(this.FirstName) && ((User)obj1).LastName.Equals(this.LastName) && ((User)obj1).ContactNo.Equals(this.ContactNo) && ((User)obj1).EmailId.Equals(this.EmailId) && ((User)obj1).DesignationID.Equals(this.DesignationID) &&  ((User)obj1).isUserActive.Equals(this.isUserActive))
                 {
                     isUserEqual = true;
                 }

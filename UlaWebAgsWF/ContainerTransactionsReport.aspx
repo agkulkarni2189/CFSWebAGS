@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Container Transactions History" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ContainerTransactionsReport.aspx.cs" Inherits="UlaWebAgsWF.ContainerTransactionsReport" %>
+﻿<%@ Page Title="Container Transactions History" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ContainerTransactionProxysReport.aspx.cs" Inherits="UlaWebAgsWF.ContainerTransactionProxysReport" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -60,7 +60,7 @@
             <div class="form-group element-form">
                 <label for="MainContent_FromDate">Lane:</label>
                 <asp:DropDownList ID="LaneDD" CssClass="form-control" runat="server" DataSourceID="DIMContainerDBEDS" DataTextField="LaneName" DataValueField="LaneID"></asp:DropDownList>
-                <asp:EntityDataSource ID="DIMContainerDBEDS" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="LaneMasters" Select="it.[LaneID], it.[LaneName]">
+                <asp:EntityDataSource ID="DIMContainerDBEDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="LaneMasters" Select="it.[LaneID], it.[LaneName]">
                 </asp:EntityDataSource>
             </div>
         </div>

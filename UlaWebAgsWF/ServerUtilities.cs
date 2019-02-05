@@ -23,7 +23,7 @@ namespace UlaWebAgsWF
 
         public string GetDecryptedMessage(string Message)
         {
-            return Encoding.Unicode.GetString(ProtectedData.Unprotect(Convert.FromBase64String(Message), null, DataProtectionScope.CurrentUser));
+            return Encoding.Unicode.GetString(ProtectedData.Unprotect(Convert.FromBase64String(Message), null, DataProtectionScope.LocalMachine));
         }
     }
 }

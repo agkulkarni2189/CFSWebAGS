@@ -32,13 +32,13 @@
                 <div class="form-group">
                     <label for="CamLaneDD">Camera Lane:</label>
                     <asp:DropDownList ID="CamLaneDD" CssClass="form-control" runat="server" DataSourceID="CamLaneDDDS" DataTextField="LaneName" DataValueField="LaneID"></asp:DropDownList>
-                    <asp:EntityDataSource ID="CamLaneDDDS" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="LaneMasters" Select="it.[LaneID], it.[LaneName]">
+                    <asp:EntityDataSource ID="CamLaneDDDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="LaneMasters" Select="it.[LaneID], it.[LaneName]">
                     </asp:EntityDataSource>
                 </div>
                 <div class="form-group">
                     <label for="CamPosDD">Camera Position:</label>
                     <asp:DropDownList ID="CamPosDD" CssClass="form-control" runat="server" DataSourceID="CamPosDDDS" DataTextField="PositionName" DataValueField="PositionID"></asp:DropDownList>
-                    <asp:EntityDataSource ID="CamPosDDDS" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="CameraPositionMasters" Select="it.[PositionID], it.[PositionName]">
+                    <asp:EntityDataSource ID="CamPosDDDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="CameraPositionMasterProxys" Select="it.[PositionID], it.[PositionName]">
                     </asp:EntityDataSource>
                 </div>
                 <div class="checkbox">

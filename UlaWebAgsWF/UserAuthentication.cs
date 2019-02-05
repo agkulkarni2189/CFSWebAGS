@@ -5,34 +5,39 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using DIMSContainerDBEFDLL;
+using AutoMapper;
+using DIMSContainerDBEFDLL.EntityProxies;
+
 namespace UlaWebAgsWF
 {
     public class UserAuthentication : IDisposable
     {
-        DIMSContainerDBEFDLL.DIMContainerDB_RevisedEntities dcre = null;
-        DIMSContainerDBEFDLL.UserMaster UserToAuthenticate = null;
+        DIMSContainerDBEFDLL.DIMContainerDB_Revised_DevEntities dcre = null;
+        DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy UserToAuthenticate = null;
         private ServerUtilities utilities = null;
 
-        public UserAuthentication(ref DIMSContainerDBEFDLL.UserMaster user)
+        public UserAuthentication(ref DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy user)
         {
-            dcre = new DIMContainerDB_RevisedEntities();
+            dcre = new DIMContainerDB_Revised_DevEntities();
             UserToAuthenticate = user;
             utilities = new ServerUtilities();
         }
 
-        public DIMSContainerDBEFDLL.UserMaster GetAuthenticatedUser()
+        public DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy GetAuthenticatedUser()
         {
-            DIMSContainerDBEFDLL.UserMaster AuthenticatedUser = null;
+            DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy AuthenticatedUser = null;
+            UserMasterProxy MatchedUserFromDB = null;
 
-            List<UserMaster> users = dcre.UserMasters.Where(a => a.UserName.Equals(UserToAuthenticate.UserName)).Select(a => a).ToList<UserMaster>();
-            foreach (DIMSContainerDBEFDLL.UserMaster user in users)
+            if (dcre.UserMasters.Where(a => a.UserName.Equals(UserToAuthenticate.UserName)).Count() > 0)
+                MatchedUserFromDB = Mapper.Map<UserMasterProxy>(dcre.UserMasters.Where(a => a.UserName.Equals(UserToAuthenticate.UserName)).First());
+
+            if (UserToAuthenticate != null && MatchedUserFromDB != null)
             {
-                string Password = utilities.GetDecryptedMessage(user.Password);
+                MatchedUserFromDB.Password = utilities.GetDecryptedMessage(MatchedUserFromDB.Password);
 
-                if (UserToAuthenticate != null && UserToAuthenticate.Password.Equals(Password))
+                if (UserToAuthenticate.Equals(MatchedUserFromDB))
                 {
-                    AuthenticatedUser = user;
-                    break;
+                    AuthenticatedUser = MatchedUserFromDB;
                 }
             }
 

@@ -8,36 +8,61 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DIMSContainerDBEFDLL;
+using NLog;
 
 namespace UlaWebAgsWF
 {
     public partial class ScreensMaster : System.Web.UI.Page
     {
-        private DIMContainerDB_RevisedEntities dcre = null;
+        private DIMContainerDB_Revised_DevEntities dcre = null;
         private static ConcurrentDictionary<int, ScreenMaster> ScreensDictionary = null;
         private CancellationToken ScreensTasksCT = new CancellationToken(false);
-        TaskFactory<Task> ScreensTF = null;
         private List<sp_GetScreensFromRoleID_Result> UserAccessibleScreens = null;
-        private DIMSContainerDBEFDLL.UserMaster LoggedInUser = null;
+        private static Logger logger = LogManager.GetLogger("ScreensMasterLogger", typeof(ScreensMaster));
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            await ClearMessages();
-            dcre = new DIMContainerDB_RevisedEntities();
-            UserAccessibleScreens = (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"];
-
-            if (!IsPostBack)
+            try
             {
-                ScreensTF = new TaskFactory<Task>(ScreensTasksCT, TaskCreationOptions.AttachedToParent, TaskContinuationOptions.AttachedToParent, null);
-                List<ScreenMaster> Screens = dcre.ScreenMasters.ToList<ScreenMaster>();
-                ScreensDictionary = new ConcurrentDictionary<int, ScreenMaster>();
+                await ClearMessages();
 
-                Screens = dcre.ScreenMasters.ToList<ScreenMaster>();
+                if (HttpContext.Current.Session["ScreensMasterSuccessMsg"] != null)
+                {
+                    SuccessMsgText.Text = HttpContext.Current.Session["ScreensMasterSuccessMsg"].ToString();
+                    SuccessMsgText.Visible = true;
+                    SuccessMsg.Visible = true;
+                    HttpContext.Current.Session.Remove("ScreensMasterSuccessMsg");
+                }
 
-                foreach (ScreenMaster Screen in Screens)
-                    ScreensDictionary.AddOrUpdate(Screen.ID, Screen, (a, b) => Screen);
+                if (HttpContext.Current.Session["ScreensMasterFailureMsg"] != null)
+                {
+                    FailureMsgText.Text = HttpContext.Current.Session["ScreensMasterFailureMsg"].ToString();
+                    FailureMsgText.Visible = true;
+                    FailureMsg.Visible = true;
+                    HttpContext.Current.Session.Remove("ScreensMasterFailureMsg");
+                }
 
-                await Fill_ScreensDGV();
+                dcre = new DIMContainerDB_Revised_DevEntities();
+                UserAccessibleScreens = (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"];
+
+                if (!IsPostBack)
+                {
+                    logger.Trace(new LogMessageGenerator(() => {
+                        return "Loading lanes master from system: " + HttpContext.Current.Session["SysIP"] + " accessed by " + ((DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).UserName;
+                    }));
+
+                    List<ScreenMaster> Screens = dcre.ScreenMasters.ToList<ScreenMaster>();
+                    ScreensDictionary = new ConcurrentDictionary<int, ScreenMaster>();
+                    Screens.ForEach((s) => {
+                        ScreensDictionary.TryAdd(s.ID, s);
+                    });
+
+                    await Fill_ScreensDGV();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new HttpException(403, ex.Message, ex);
             }
         }
 
@@ -69,6 +94,8 @@ namespace UlaWebAgsWF
         {
             try
             {
+                string SuccessMsg = null;
+                string FailureMsg = null;
                 await Task.Run(new Action(() =>
                 {
                     if (Page.IsValid && dcre != null)
@@ -83,27 +110,32 @@ namespace UlaWebAgsWF
                             ScreenMaster RegisteredScreen = dcre.ScreenMasters.OrderByDescending(a => a.ID).Select(a => a).First();
                             if (ScreensDictionary.TryAdd(RegisteredScreen.ID, RegisteredScreen))
                             {
-                                SuccessMsgText.Text = "New Screen Added Successfully";
-                                SuccessMsgText.Visible = true;
-                                SuccessMsg.Visible = true;
+                                logger.Trace(new LogMessageGenerator(() => {
+                                    return "New screen added successfully";
+                                }));
+
+                                SuccessMsg = "New Screen Added Successfully";
                             }
                             else
                             {
-                                FailureMsgText.Text = "Can not add screen, contact system admin";
-                                FailureMsgText.Visible = true;
-                                FailureMsg.Visible = true;
+                                logger.Trace(new LogMessageGenerator(() => {
+                                    return "Can not add screen this time, contact system admin";
+                                }));
+
+                                FailureMsg = "Can not add screen this time, contact system admin";
                             }
                         }
                     }
                 }), ScreensTasksCT);
 
-                await Fill_ScreensDGV();
+                HttpContext.Current.Session["ScreensMasterSuccessMsg"] = SuccessMsg;
+                HttpContext.Current.Session["ScreensMasterFailureMsg"] = FailureMsg;
+                //HttpContext.Current.Session["UserAccessibleScreens"] = dcre.sp_GetScreensFromRoleID(((DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).RoleID).ToList<sp_GetScreensFromRoleID_Result>();
+                Response.Redirect(Request.RawUrl, false);
             }
             catch (Exception ex)
             {
-                FailureMsgText.Text = "Can not add screen, contact system admin";
-                FailureMsgText.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, ex.Message, ex);
             }
         }
 
@@ -119,7 +151,9 @@ namespace UlaWebAgsWF
         protected async void ScreensDGV_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
-            { 
+            {
+                string SuccessMsg = null, FailureMsg = null;
+
                 await Task.Run(new Action(() =>
                 {
                     if (Page.IsValid)
@@ -135,74 +169,79 @@ namespace UlaWebAgsWF
                             if (dcre.SaveChanges() > 0)
                             {
                                 NewScreen.ID = ScreenID;
-                                ScreensDictionary.AddOrUpdate(ScreenID, OldScreen, (a, b) => NewScreen);
+                                ScreensDictionary.TryUpdate(ScreenID, NewScreen, OldScreen);
+                                SuccessMsg = "Screen " + NewScreen.ScreenName + " updated successfully";
                             }
                         }
                         else
                         {
-                            FailureMsgText.Text = "Selected screen is either deleted or not accessible, please try after some time.";
-                            FailureMsgText.Visible = true;
-                            FailureMsg.Visible = true;
+                            logger.Trace(new LogMessageGenerator(() => {
+                                return "Selected screen is either deleted already or not accessible, please try after some time.";
+                            }));
+
+                            FailureMsg = "Selected screen is either deleted already or not accessible, please try after some time.";
                         }
 
                         ScreensDGV.EditIndex = -1;
                     }
                 }), ScreensTasksCT);
 
-                await Fill_ScreensDGV();
+
+                HttpContext.Current.Session["ScreensMasterSuccessMsg"] = SuccessMsg;
+                HttpContext.Current.Session["ScreensMasterFailureMsg"] = FailureMsg;
+                //HttpContext.Current.Session["UserAccessibleScreens"] = dcre.sp_GetScreensFromRoleID(((DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).RoleID).ToList<sp_GetScreensFromRoleID_Result>();
+                Response.Redirect(Request.RawUrl, false);
             }
             catch (Exception ex)
             {
-                FailureMsgText.Text = "Can not update selected screen";
-                FailureMsgText.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, ex.Message, ex);
             }
-        }
-
-        protected async void ScreensDGV_RowUpdated(object sender, GridViewUpdatedEventArgs e)
-        {
-            await Task.Run(new Action(() => {
-                SuccessMsgText.Text = "Selected screen updated successfully";
-                SuccessMsgText.Visible = true;
-                SuccessMsg.Visible = true;
-            }), ScreensTasksCT);
         }
 
         protected async void ScreensDGV_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
+                string SuccessMsg = null, FailureMsg = null;
                 await Task.Run(new Action(() => {
                     int ScreenID = Int32.Parse(ScreensDGV.DataKeys[e.RowIndex].Value.ToString());
                     ScreenMaster ScreenToDelete = null;
 
                     if (ScreensDictionary.TryGetValue(ScreenID, out ScreenToDelete) && dcre != null)
                     {
-                        dcre.ScreenMasters.Remove(dcre.ScreenMasters.Where(a => a.ID.Equals(ScreenToDelete.ID)).FirstOrDefault());
-
-                        if (dcre.SaveChanges() > 0)
+                        if (!ScreenToDelete.ScreenName.Equals("Home") && ScreensDictionary.Count > 1)
                         {
-                            ScreenMaster DeletedScreen = null;
+                            dcre.ScreenMasters.Remove(dcre.ScreenMasters.Where(a => a.ID.Equals(ScreenToDelete.ID)).FirstOrDefault());
 
-                            while (!ScreensDictionary.TryRemove(ScreenID, out DeletedScreen))
-                                ScreensDictionary.TryRemove(ScreenID, out DeletedScreen);
+                            if (dcre.SaveChanges() > 0)
+                            {
+                                ScreenMaster DeletedScreen = null;
+
+                                while (!ScreensDictionary.TryRemove(ScreenID, out DeletedScreen))
+                                    ScreensDictionary.TryRemove(ScreenID, out DeletedScreen);
+
+                                SuccessMsg = "Screen " + DeletedScreen.ScreenName + " removed successfully";
+                            }
+                        }
+                        else
+                        {
+                            FailureMsg = "Can not delete this screen, it is a home screen or last one in the system";
                         }
                     }
                     else
                     {
-                        FailureMsgText.Text = "Selected screen is either deleted or not accessible";
-                        FailureMsgText.Visible = true;
-                        FailureMsg.Visible = true;
+                        FailureMsg = "Selected screen is either deleted or not accessible";
                     }
                 }), ScreensTasksCT);
 
-                await Fill_ScreensDGV();
+                HttpContext.Current.Session["ScreensMasterSuccessMsg"] = SuccessMsg;
+                HttpContext.Current.Session["ScreensMasterFailureMsg"] = FailureMsg;
+                //HttpContext.Current.Session["UserAccessibleScreens"] = dcre.sp_GetScreensFromRoleID(((DIMSContainerDBEFDLL.EntityProxies.UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).RoleID).ToList<sp_GetScreensFromRoleID_Result>();
+                Response.Redirect(Request.RawUrl, true);
             }
             catch (Exception ex)
             {
-                FailureMsgText.Text = "Can not delete selected screen";
-                FailureMsgText.Visible = true;
-                FailureMsg.Visible = true;
+                throw new HttpException(403, ex.Message, ex);
             }
         }
 
@@ -217,15 +256,6 @@ namespace UlaWebAgsWF
             }), ScreensTasksCT);
 
             await Fill_ScreensDGV();
-        }
-
-        protected async void ScreensDGV_RowDeleted(object sender, GridViewDeletedEventArgs e)
-        {
-            await Task.Run(new Action(() => {
-                SuccessMsgText.Text = "Selected screen deleted successfully";
-                SuccessMsgText.Visible = true;
-                SuccessMsg.Visible = true;
-            }), ScreensTasksCT);
         }
     }
 }

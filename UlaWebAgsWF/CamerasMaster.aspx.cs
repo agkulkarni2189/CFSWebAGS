@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using Ozeki.Camera;
 using Ozeki.Media;
 using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,40 +19,17 @@ namespace UlaWebAgsWF
 {
     public partial class CamerasMaster : System.Web.UI.Page, IWebAGSClass
     {
-        private DIMContainerDB_RevisedEntities dcde = null;
+        private DIMContainerDB_Revised_DevEntities dcde = null;
         private List<StreamerManager> StreamerManagerList = null;
         int ListeningPort = 6000;
         private string ErrorMsg = string.Empty;
         private List<sp_GetScreensFromRoleID_Result> UserAccessibleScreens = null;
-        private DIMSContainerDBEFDLL.UserMaster LoggedInUser = null;
+        private UserMaster LoggedInUser = null;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //UserAccessibleScreens = (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"];
-            //LoggedInUser = (UserMaster)HttpContext.Current.Session["LoggedInUser"];
-
-            dcde = new DIMContainerDB_RevisedEntities();
-
-            //if (HttpContext.Current.Session["LoggedInUser"] == null || !((DIMSContainerDBEFDLL.UserMaster)Session["LoggedInUser"]).IsLoggedin)
-            //{
-            //    HttpContext.Current.Session["ErrorMsg"] = "No user logged in";
-            //    Response.Redirect("Login.aspx", true);
-            //    //this.SetMessage("No user logged in");
-            //    //new SiteMaster().LinkLogout_Click(this, new EventArgs());
-            //}
-
-            //using (UserAuthorization UAuth = new UserAuthorization(ref LoggedInUser, ref UserAccessibleScreens))
-            //{
-            //    if (!UAuth.canUserAccessPage(Request.Url.AbsolutePath, ref LoggedInUser))
-            //    {
-            //        HttpContext.Current.Session["ErrorMsg"] = "User " + LoggedInUser.UserName + " has no access to camera module";
-            //        Response.Redirect("Default.aspx", true);
-            //        //this.SetMessage("Logged in user is not authorized to access camera master module");
-            //        //new SiteMaster().RedirectHomePage(this, new EventArgs());
-            //    }
-            //}
+            dcde = new DIMContainerDB_Revised_DevEntities();
 
             StreamerManagerList = new List<StreamerManager>();
 
@@ -168,15 +146,15 @@ namespace UlaWebAgsWF
             //Page.Validate();
             if (Page.IsValid)
             {
-                CameraDtlsTbl cameraDetails = new CameraDtlsTbl();
+                CameraDtlsTblProxy cameraDetails = new CameraDtlsTblProxy();
                 int PositionID = Int32.Parse(CamPosDD.SelectedValue);
                 int LaneID = Int32.Parse(CamLaneDD.SelectedValue);
 
-                CameraPositionMaster cameraPositionMaster = dcde.CameraPositionMasters.Where(s => s.PositionID == PositionID).Select(t => t).FirstOrDefault();
+                CameraPositionMaster CameraPositionMaster = dcde.CameraPositionMasters.Where(s => s.PositionID == PositionID).Select(t => t).FirstOrDefault();
                 LaneMaster laneMaster = dcde.LaneMasters.Where(s => s.LaneID == LaneID).Select(t => t).FirstOrDefault();
 
                 cameraDetails.CameraIP = txtCamIP.Text;
-                cameraDetails.CameraPositionMaster = cameraPositionMaster;
+                cameraDetails.CameraPositionMaster = CameraPositionMaster;
                 cameraDetails.PositionID = PositionID;
                 cameraDetails.LaneID = LaneID;
                 cameraDetails.Active = IsCamActive.Checked;
@@ -190,14 +168,14 @@ namespace UlaWebAgsWF
             //Page.Validate();
             if (Page.IsValid)
             {
-                CameraPositionMaster cameraPositionMaster = new CameraPositionMaster();
-                cameraPositionMaster.CameraDtlsTbls = null;
-                cameraPositionMaster.PositionName = txtPosName.Text;
-                cameraPositionMaster.PositionDescription = txtPosDesc.Text;
-                cameraPositionMaster.ContainerVisible = Int32.Parse(txtContVis.Text);
-                cameraPositionMaster.ImageIndex = null;
+                CameraPositionMasterProxy CameraPositionMasterProxy = new CameraPositionMasterProxy();
+                CameraPositionMasterProxy.CameraDtlsTbls = null;
+                CameraPositionMasterProxy.PositionName = txtPosName.Text;
+                CameraPositionMasterProxy.PositionDescription = txtPosDesc.Text;
+                CameraPositionMasterProxy.ContainerVisible = Int32.Parse(txtContVis.Text);
+                CameraPositionMasterProxy.ImageIndex = null;
 
-                dcde.CameraPositionMasters.Add(cameraPositionMaster);
+                dcde.CameraPositionMasters.Add(CameraPositionMasterProxy);
                 dcde.SaveChanges();
             }
         }

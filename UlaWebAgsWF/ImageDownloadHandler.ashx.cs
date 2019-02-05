@@ -13,7 +13,7 @@ namespace UlaWebAgsWF
     /// </summary>
     public class ImageDownloadHandler : IHttpHandler
     {
-        DIMContainerDB_RevisedEntities dcde = new DIMContainerDB_RevisedEntities();
+        DIMContainerDB_Revised_DevEntities dcde = new DIMContainerDB_Revised_DevEntities();
 
         public void ProcessRequest(HttpContext context)
         {
@@ -27,7 +27,7 @@ namespace UlaWebAgsWF
                     PositionIDs = context.Request.Headers["PositionIDs"].ToString();
                 }
 
-                ContainerTransaction ct = dcde.ContainerTransactions.Find(new ContainerTransaction { TransID = CurrentTransID });
+                DIMSContainerDBEFDLL.EntityProxies.ContainerTransactionProxy ct = (DIMSContainerDBEFDLL.EntityProxies.ContainerTransactionProxy)dcde.ContainerTransactions.Find(new ContainerTransaction { TransID = CurrentTransID });
                 System.Web.HttpResponse httpResponse = System.Web.HttpContext.Current.Response;
                 httpResponse.ClearContent();
                 httpResponse.Clear();

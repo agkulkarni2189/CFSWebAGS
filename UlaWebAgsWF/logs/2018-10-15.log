@@ -1,0 +1,166 @@
+2018-10-15 11:45:45.8540 TRACE Default screens generated successfully.
+2018-10-15 11:45:46.0005 TRACE Default super admin role created successfully.
+2018-10-15 12:21:06.0921 INFO Initiating user log in process
+2018-10-15 12:21:09.3977 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 12:38:18.8780 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 13:06:12.4045 INFO Initiating user log in process
+2018-10-15 13:06:26.2797 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 13:06:39.2525 INFO User not authorized to verify live transactions
+2018-10-15 13:06:39.2525 INFO Starting to build dashboard menu
+2018-10-15 13:06:39.4497 INFO Dashboard menu build successful
+2018-10-15 13:13:36.2867 INFO Initiating user log in process
+2018-10-15 13:13:38.1335 INFO User super_admin is already logged in.
+2018-10-15 13:16:29.6123 INFO Initiating user log in process
+2018-10-15 13:16:45.4388 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 13:17:18.2221 INFO User not authorized to verify live transactions
+2018-10-15 13:17:18.2221 INFO Starting to build dashboard menu
+2018-10-15 13:17:18.2221 INFO Dashboard menu build successful
+2018-10-15 13:22:47.6406 INFO Initiating user log in process
+2018-10-15 13:23:30.9770 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 13:24:19.5764 INFO User not authorized to verify live transactions
+2018-10-15 13:24:19.5764 INFO Starting to build dashboard menu
+2018-10-15 13:24:19.5794 INFO Dashboard menu build successful
+2018-10-15 14:45:06.1212 INFO Initiating user log in process
+2018-10-15 14:45:07.2856 INFO User log in failed due to invalid log in credentials
+2018-10-15 14:53:20.0421 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 14:53:36.3796 INFO Initiating user log in process
+2018-10-15 14:53:50.4789 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 14:53:52.8705 INFO User loggin in first time, redirecting to password reset page
+2018-10-15 14:55:12.3671 INFO User not authorized to verify live transactions
+2018-10-15 14:55:12.3671 INFO Starting to build dashboard menu
+2018-10-15 14:55:12.3671 INFO Dashboard menu build successful
+2018-10-15 15:02:30.1695 INFO Initiating user log in process
+2018-10-15 15:02:31.6976 INFO User super_admin is already logged in.
+2018-10-15 15:02:59.7922 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 15:03:01.2774 INFO Initiating user log in process
+2018-10-15 15:03:02.1878 INFO User log in failed due to invalid log in credentials
+2018-10-15 15:03:16.2836 INFO Initiating user log in process
+2018-10-15 15:03:17.0432 INFO User log in failed due to invalid log in credentials
+2018-10-15 15:03:26.3609 INFO Initiating user log in process
+2018-10-15 15:03:27.0505 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 15:03:27.0505 INFO User loggin in first time, redirecting to password reset page
+2018-10-15 15:03:39.7103 INFO User not authorized to verify live transactions
+2018-10-15 15:03:39.7103 INFO Starting to build dashboard menu
+2018-10-15 15:03:39.7103 INFO Dashboard menu build successful
+2018-10-15 15:10:08.7020 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 15:10:24.3167 INFO Initiating user log in process
+2018-10-15 15:10:25.4838 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 15:10:25.4858 INFO User loggin in first time, redirecting to password reset page
+2018-10-15 15:10:41.9936 INFO User not authorized to verify live transactions
+2018-10-15 15:10:41.9936 INFO Starting to build dashboard menu
+2018-10-15 15:10:41.9936 INFO Dashboard menu build successful
+2018-10-15 15:11:33.4622 INFO User not authorized to verify live transactions
+2018-10-15 15:11:33.4622 INFO Starting to build dashboard menu
+2018-10-15 15:11:33.4622 INFO Dashboard menu build successful
+2018-10-15 15:32:55.9170 TRACE Default screens generated successfully.
+2018-10-15 15:32:55.9759 TRACE Default super admin role created successfully.
+2018-10-15 15:33:05.0561 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 15:33:18.2677 INFO Initiating user log in process
+2018-10-15 15:33:19.2828 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 15:33:19.2828 INFO User loggin in first time, redirecting to password reset page
+2018-10-15 15:42:30.5314 INFO User not authorized to verify live transactions
+2018-10-15 15:42:30.5334 INFO Starting to build dashboard menu
+2018-10-15 15:42:30.5334 INFO Dashboard menu build successful
+2018-10-15 15:51:57.9371 INFO Initiating user log in process
+2018-10-15 15:51:58.8586 INFO User log in failed due to invalid log in credentials
+2018-10-15 15:52:15.1465 INFO Initiating user log in process
+2018-10-15 15:52:15.9021 INFO User log in failed due to invalid log in credentials
+2018-10-15 15:52:28.6132 INFO Initiating user log in process
+2018-10-15 15:52:29.3258 INFO User log in failed due to invalid log in credentials
+2018-10-15 15:52:41.8488 INFO Initiating user log in process
+2018-10-15 15:52:42.8199 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 15:52:42.8199 INFO Redirecting to dashboard
+2018-10-15 15:52:45.3845 INFO User not authorized to verify live transactions
+2018-10-15 15:52:45.3845 INFO Starting to build dashboard menu
+2018-10-15 15:52:45.3845 INFO Dashboard menu build successful
+2018-10-15 15:59:20.6619 INFO Initiating user log in process
+2018-10-15 15:59:21.5684 INFO User super_admin is already logged in.
+2018-10-15 16:00:05.0087 INFO Initiating user log in process
+2018-10-15 16:00:05.9512 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 16:00:05.9512 INFO Redirecting to dashboard
+2018-10-15 16:00:08.4562 INFO User not authorized to verify live transactions
+2018-10-15 16:00:08.4562 INFO Starting to build dashboard menu
+2018-10-15 16:00:08.4562 INFO Dashboard menu build successful
+2018-10-15 16:06:34.6329 INFO Initiating user log in process
+2018-10-15 16:06:35.8492 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 16:06:35.8492 INFO Redirecting to dashboard
+2018-10-15 16:06:38.1200 INFO User not authorized to verify live transactions
+2018-10-15 16:06:38.1200 INFO Starting to build dashboard menu
+2018-10-15 16:06:38.1200 INFO Dashboard menu build successful
+2018-10-15 16:07:09.6831 INFO User not authorized to verify live transactions
+2018-10-15 16:07:09.6831 INFO Starting to build dashboard menu
+2018-10-15 16:07:09.6831 INFO Dashboard menu build successful
+2018-10-15 16:16:22.3148 INFO Initiating user log in process
+2018-10-15 16:16:23.6511 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 16:16:23.6511 INFO Redirecting to dashboard
+2018-10-15 16:16:27.2406 INFO User not authorized to verify live transactions
+2018-10-15 16:16:27.2406 INFO Starting to build dashboard menu
+2018-10-15 16:16:27.2406 INFO Dashboard menu build successful
+2018-10-15 16:22:10.8510 INFO User not authorized to verify live transactions
+2018-10-15 16:22:10.8510 INFO Starting to build dashboard menu
+2018-10-15 16:22:10.8510 INFO Dashboard menu build successful
+2018-10-15 16:22:41.4522 INFO Initiating user log in process
+2018-10-15 16:22:42.1538 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 16:22:42.1538 INFO Redirecting to dashboard
+2018-10-15 16:22:44.1886 INFO User not authorized to verify live transactions
+2018-10-15 16:22:44.1886 INFO Starting to build dashboard menu
+2018-10-15 16:22:44.1886 INFO Dashboard menu build successful
+2018-10-15 16:27:12.4310 INFO Initiating user log in process
+2018-10-15 16:27:13.0306 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 16:27:13.0306 INFO Redirecting to dashboard
+2018-10-15 16:27:13.0826 INFO Starting to build dashboard menu
+2018-10-15 16:27:13.0826 INFO Dashboard menu build successful
+2018-10-15 16:27:17.4345 INFO Checking for live transaciton in database
+2018-10-15 16:27:20.5184 INFO Checking for live transaciton in database
+2018-10-15 16:27:24.7616 INFO Checking for live transaciton in database
+2018-10-15 16:27:42.7084 INFO No session set, invalid application context
+2018-10-15 16:28:16.4778 INFO No session set, invalid application context
+2018-10-15 16:28:20.5973 INFO No session set, invalid application context
+2018-10-15 16:28:42.6523 INFO Starting to build dashboard menu
+2018-10-15 16:28:42.6523 INFO Dashboard menu build successful
+2018-10-15 16:28:42.9661 INFO Starting to build dashboard menu
+2018-10-15 16:28:42.9721 INFO Dashboard menu build successful
+2018-10-15 16:28:46.1093 INFO Checking for live transaciton in database
+2018-10-15 16:28:50.2885 INFO Checking for live transaciton in database
+2018-10-15 16:28:52.3203 INFO Checking for live transaciton in database
+2018-10-15 16:28:54.3654 INFO Checking for live transaciton in database
+2018-10-15 16:28:56.4342 INFO Checking for live transaciton in database
+2018-10-15 16:28:58.4571 INFO Checking for live transaciton in database
+2018-10-15 16:29:12.7604 INFO Starting to build dashboard menu
+2018-10-15 16:29:12.7604 INFO Dashboard menu build successful
+2018-10-15 16:29:14.8702 INFO Checking for live transaciton in database
+2018-10-15 16:29:16.9040 INFO Checking for live transaciton in database
+2018-10-15 16:29:18.9778 INFO Checking for live transaciton in database
+2018-10-15 16:29:21.0223 INFO Checking for live transaciton in database
+2018-10-15 16:29:23.0571 INFO Checking for live transaciton in database
+2018-10-15 16:29:25.0951 INFO Checking for live transaciton in database
+2018-10-15 16:29:27.1183 INFO Checking for live transaciton in database
+2018-10-15 16:29:29.1488 INFO Checking for live transaciton in database
+2018-10-15 16:29:31.2083 INFO Checking for live transaciton in database
+2018-10-15 16:29:33.2382 INFO Checking for live transaciton in database
+2018-10-15 16:29:35.2597 INFO Checking for live transaciton in database
+2018-10-15 16:29:35.4656 INFO Starting to build dashboard menu
+2018-10-15 16:29:35.4656 INFO Dashboard menu build successful
+2018-10-15 17:36:59.7283 TRACE Default screens generated successfully.
+2018-10-15 17:40:25.6742 TRACE Default screens generated successfully.
+2018-10-15 17:43:24.0343 TRACE Default screens generated successfully.
+2018-10-15 17:43:36.8139 TRACE Default super admin role created successfully.
+2018-10-15 17:43:42.5035 TRACE Default user super_admin with super admin role created successfully.
+2018-10-15 17:44:05.8725 INFO Initiating user log in process
+2018-10-15 17:44:06.1084 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 17:44:06.1084 INFO User loggin in first time, redirecting to password reset page
+2018-10-15 17:44:18.9245 INFO User not authorized to verify live transactions
+2018-10-15 17:44:18.9245 INFO Starting to build dashboard menu
+2018-10-15 17:44:18.9245 INFO Dashboard menu build successful
+2018-10-15 17:54:35.3169 INFO Initiating user log in process
+2018-10-15 17:54:35.6047 INFO User super_admin is already logged in.
+2018-10-15 17:55:03.6859 INFO Initiating user log in process
+2018-10-15 17:55:04.0117 INFO Log in successful for super_admin accessing from system: 192.168.1.160
+2018-10-15 17:55:04.0117 INFO Redirecting to dashboard
+2018-10-15 17:55:05.1811 INFO User not authorized to verify live transactions
+2018-10-15 17:55:05.1811 INFO Starting to build dashboard menu
+2018-10-15 17:55:05.1811 INFO Dashboard menu build successful
+2018-10-15 17:55:40.5451 INFO User not authorized to verify live transactions
+2018-10-15 17:55:40.5481 INFO Starting to build dashboard menu
+2018-10-15 17:55:40.5481 INFO Dashboard menu build successful
+2018-10-15 17:55:43.8269 TRACE Loading lanes master from system: 192.168.1.160 accessed by super_admin

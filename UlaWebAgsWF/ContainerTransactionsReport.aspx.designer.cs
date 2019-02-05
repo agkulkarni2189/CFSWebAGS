@@ -10,7 +10,7 @@
 namespace UlaWebAgsWF {
     
     
-    public partial class ContainerTransactionsReport {
+    public partial class ContainerTransactionProxysReport {
         
         /// <summary>
         /// dmgtypedd control.

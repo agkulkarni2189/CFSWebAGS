@@ -27,14 +27,14 @@
         <asp:Literal ID="SuccessMsgLiteral" runat="server"></asp:Literal>
     </asp:Panel>
     <asp:Panel ID="PageLinksContainer" runat="server">
-        <asp:UpdatePanel ID="TransCheckUpdatePanel" runat="server">
+        <%--<asp:UpdatePanel ID="TransCheckUpdatePanel" runat="server">
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="TransCheckTimer" EventName="Tick" />
             </Triggers>
             <ContentTemplate>
-                <asp:Timer ID="TransCheckTimer" runat="server" OnTick="TransCheckTimer_Tick" Interval="2000"></asp:Timer>
+                <asp:Timer ID="TransCheckTimer" runat="server" OnTick="TransCheckTimer_Tick" Interval="2000" Enabled="False"></asp:Timer>
             </ContentTemplate>
-        </asp:UpdatePanel>
+        </asp:UpdatePanel>--%>
         <asp:Literal ID="PageLinksLiteral" runat="server">
         </asp:Literal>
     </asp:Panel>

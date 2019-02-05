@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Security.Cryptography;
 using System.Text;
 using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
 
 namespace UlaWebAgsWF
 {
@@ -14,10 +15,7 @@ namespace UlaWebAgsWF
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                Fill_MainMenu();
-            }
+            Fill_MainMenu();
         }
 
         private void Fill_MainMenu()
@@ -25,18 +23,15 @@ namespace UlaWebAgsWF
 
             MainMenuLiteral.Text = string.Empty;
 
-            if (HttpContext.Current.Session["UserAccessibleScreens"] != null && (HttpContext.Current.Session["PasswordResetRequest"] != null && !Boolean.Parse(HttpContext.Current.Session["PasswordResetRequest"] as string)))
+            if (HttpContext.Current.Session["UserAccessibleScreens"] != null || (HttpContext.Current.Session["PasswordResetRequest"] != null && !Boolean.Parse(HttpContext.Current.Session["PasswordResetRequest"] as string)))
             {
                 foreach (sp_GetScreensFromRoleID_Result uas in (List<sp_GetScreensFromRoleID_Result>)HttpContext.Current.Session["UserAccessibleScreens"])
                 {
-                    if(!uas.ScreenUrl.Equals("DamageImages.aspx"))
+                    if (!uas.ScreenUrl.Equals("DamageImages.aspx"))
                         MainMenuLiteral.Text += "<li id='" + uas.ScreenName + "LinkContainer'><a runat='server' id='" + uas.ScreenName + "Link' href='" + uas.ScreenUrl + "'>" + uas.ScreenName + "</a></li>";
                 }
-            }
 
-            if (HttpContext.Current.Session["LoggedInUser"] != null && (HttpContext.Current.Session["PasswordResetRequest"] != null && !Boolean.Parse(HttpContext.Current.Session["PasswordResetRequest"] as string)))
-            {
-                if (((UserMaster)HttpContext.Current.Session["LoggedInUser"]).IsLoggedin)
+                if (((UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).IsLoggedin)
                     LinkLogout.Visible = true;
             }
             else
@@ -47,16 +42,18 @@ namespace UlaWebAgsWF
         {
             try
             {
-                DIMSContainerDBEFDLL.DIMContainerDB_RevisedEntities dcre = new DIMSContainerDBEFDLL.DIMContainerDB_RevisedEntities();
-                DIMSContainerDBEFDLL.UserMaster LoggedInUser = (DIMSContainerDBEFDLL.UserMaster)HttpContext.Current.Session["LoggedInUser"];
+                DIMContainerDB_Revised_DevEntities dcre = new DIMContainerDB_Revised_DevEntities();
+                UserMasterProxy LoggedInUser = (UserMasterProxy)HttpContext.Current.Session["LoggedInUser"];
 
                 if (LoggedInUser != null)
                 {
-                    UserMaster UserToLogInDB = dcre.UserMasters.Where(a => a.UserId.Equals(LoggedInUser.UserId)).First();
-                    UserToLogInDB.IsLoggedin = false;
+                    UserMasterProxy UserToLogOutDB = (UserMasterProxy)dcre.UserMasters.Where(a => a.UserId.Equals(LoggedInUser.UserId)).First();
+                    UserToLogOutDB.IsLoggedin = false;
+                    UserToLogOutDB.DeviceID = null;
                     dcre.SaveChanges();
                     HttpContext.Current.Session.Remove("LoggedInUser");
                     HttpContext.Current.Session.Remove("UserAccessibleScreens");
+                    HttpContext.Current.Session.Remove("LoggedInDevice");
                     HttpContext.Current.Session["SuccessMsg"] = "User logged out successfully";
                 }
                 else
@@ -68,7 +65,7 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
     }

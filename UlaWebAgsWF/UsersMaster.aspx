@@ -6,7 +6,7 @@
             display:none;
         }
     </style>
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
         $(document).ready(function () {
             $('#<%= UserRolesDD.ClientID %>').change(function () {
                 //console.log($("#<%= UserRolesDD.ClientID %> option:selected").val());
@@ -21,7 +21,7 @@
                 }
             });
         });
-    </script>
+    </script>--%>
     <div class="container">
         <div class="page-header">
             <h2>
@@ -40,49 +40,49 @@
             <asp:LinkButton ID="CerateNewUserLink" style="padding: 0px;" CssClass="btn btn-link" Text="Create User" runat="server" />
         </asp:Panel>
 
-        <asp:Panel ID="CreateNewUserPanel" runat="server" CssClass="text-left" style="display:none">
+        <asp:Panel ID="CreateNewUserPanel" runat="server" CssClass="text-left" style="display:none;">
             <form>
                 <div class="form-group">
                     <label for="NewUserFN">First Name:</label>
                     <asp:TextBox ID="NewUserFN" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserFN" ControlToValidate="NewUserFN" CssClass="alert alert-danger validator-field" runat="server" ErrorMessage="Please enter First Name"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserFN" ControlToValidate="NewUserFN" CssClass="text text-danger validator-field" runat="server" ErrorMessage="Please enter First Name"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidatorNewUserFN" ControlToValidate="NewUserFN" ValidationExpression="^[a-zA-Z]+$" runat="server" CssClass="text text-danger" ErrorMessage="Only letters allowed"></asp:RegularExpressionValidator>
                 </div>
                 <div class="form-group">
                     <label for="NewUserLN">Last Name:</label>
                     <asp:TextBox ID="NewUserLN" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserLN" ControlToValidate="NewUserLN" CssClass="alert alert-danger validator-field" runat="server" ErrorMessage="Please enter Last Name"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserLN" ControlToValidate="NewUserLN" CssClass="text text-danger validator-field" runat="server" ErrorMessage="Please enter Last Name"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidatorNewUserLN" ControlToValidate="NewUserLN" ValidationExpression="^[a-zA-Z]+$" runat="server" CssClass="text text-danger" ErrorMessage="Only letters allowed"></asp:RegularExpressionValidator>
                 </div>
                 <div class="form-group">
                     <label for="NewUserCN">Contact Number:</label>
                     <asp:TextBox ID="NewUserCN" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserCN" ControlToValidate="NewUserCN" CssClass="alert alert-danger validator-field" runat="server" ErrorMessage="Please enter contact number"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserCN" ControlToValidate="NewUserCN" CssClass="text text-danger validator-field" runat="server" ErrorMessage="Please enter contact number"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="RegularExpressionNewUserCN" ValidationExpression="^[0-9]{10}$" ControlToValidate="NewUserCN" runat="server" ErrorMessage="Contact number must be numeric and 10 digits only"></asp:RegularExpressionValidator>
                 </div>
                 <div class="form-group">
                     <label for="NewUserEmail">E-Mail:</label>
                     <asp:TextBox ID="NewUserEmail" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserEmail" CssClass="alert alert-danger validator-field" ControlToValidate="NewUserEmail" runat="server" ErrorMessage="Please enter E-Mail"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserEmail" CssClass="text text-danger validator-field" ControlToValidate="NewUserEmail" runat="server" ErrorMessage="Please enter E-Mail"></asp:RequiredFieldValidator>
                     <asp:RegularExpressionValidator ID="RegularExpressionNewUserEmail" ControlToValidate="NewUserEmail" ValidationExpression="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" runat="server" ErrorMessage="Please enter a valid E-Mail"></asp:RegularExpressionValidator>
                 </div>
                 <div class="form-group">
                     <label for="NewUserDesignation">Designation:</label>
-                    <asp:TextBox ID="NewUserDesignation" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldDesignation" CssClass="alert alert-danger validator-field" ControlToValidate="NewUserDesignation" runat="server" ErrorMessage="Please enter designation"></asp:RequiredFieldValidator>
+                    <br />
+                    <asp:DropDownList ID="UserDesignationDD" runat="server" CssClass="form-control">
+                    </asp:DropDownList>
+                    <br />
                 </div>
                 <div class="form-group">
                     <label for="NewUserUserName">User Name:</label>
                     <asp:TextBox ID="NewUserUserName" runat="server" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserUserName" runat="server" CssClass="alert alert-danger validator-field" ControlToValidate="NewUserUserName" ErrorMessage="Please enter User Name"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="CustomNewUserUserName" CssClass="alert alert-danger validator-field" ValidateEmptyText="true" runat="server" ControlToValidate="NewUserUserName" ErrorMessage="User name must be unique." OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserUserName" runat="server" CssClass="text text-danger validator-field" ControlToValidate="NewUserUserName" ErrorMessage="Please enter User Name"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CustomNewUserUserName" CssClass="text text-danger validator-field" ValidateEmptyText="true" runat="server" ControlToValidate="NewUserUserName" ErrorMessage="User name must be unique." OnServerValidate="CustomValidator1_ServerValidate"></asp:CustomValidator>
                 </div>
                 <div class="form-group">
                     <label for="NewUserPassword">Password:</label>
                     <asp:TextBox ID="NewUserPassword" runat="server" TextMode="Password" CssClass="form-control" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserPassword" CssClass="alert alert-danger validator-field" ControlToValidate="NewUserPassword" runat="server" ErrorMessage="Please enter password"></asp:RequiredFieldValidator>
-                </div>
-                <div class="form-group">
-                    <label for="UserRolesDD">Role:</label>
-                    <asp:DropDownList ID="UserRolesDD" CssClass="form-control" runat="server"></asp:DropDownList>  
+                    <asp:RequiredFieldValidator ID="RequiredFieldNewUserPassword" CssClass="text text-danger validator-field" ControlToValidate="NewUserPassword" runat="server" ErrorMessage="Please enter password"></asp:RequiredFieldValidator>
                 </div>
                 <div class="checkbox" id="UserActiveCBCont">
                     <asp:CheckBox ID="UserActiveCB" runat="server" Text="User Active?" />
@@ -130,19 +130,21 @@
                         <asp:Label ID="DesignationTxt" runat="server" Text='<%# Bind("Designation") %>' />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="DesignationTextBox" CssClass="form-control" runat="server" Text='<%# Bind("Designation") %>' />
+                        <asp:DropDownList ID="UserDGVDesignationDD" DataSourceID="UserDesignationEDS" DataTextField="DesignationName" DataValueField="ID" CssClass="form-control" runat="server"></asp:DropDownList>
+                        <asp:EntityDataSource ID="UserDesignationEDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="DIMSContainerDBEFDLL.EntityProxies.RoleMasterProxys" Select="it.[ID], it.[DesignationName]">
+                        </asp:EntityDataSource> 
                     </EditItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Role" SortExpression="Role">
+                <%--<asp:TemplateField HeaderText="Role" SortExpression="Role">
                     <ItemTemplate>
                         <asp:Label ID="RoleText" runat="server" Text='<%# Bind("Role") %>'></asp:Label>
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:DropDownList ID="UserDGVRoleDD" DataSourceID="UserRolesEDS" DataTextField="RoleName" DataValueField="ID" CssClass="form-control" runat="server"></asp:DropDownList>
-                        <asp:EntityDataSource ID="UserRolesEDS" runat="server" ConnectionString="name=DIMContainerDB_RevisedEntities" DefaultContainerName="DIMContainerDB_RevisedEntities" EnableFlattening="False" EntitySetName="RoleMasters" Select="it.[ID], it.[RoleName]">
+                        <asp:EntityDataSource ID="UserRolesEDS" runat="server" ConnectionString="name=DIMContainerDB_Revised_DevEntities" DefaultContainerName="DIMContainerDB_Revised_DevEntities" EnableFlattening="False" EntitySetName="DIMSContainerDBEFDLL.EntityProxies.RoleMasterProxys" Select="it.[ID], it.[RoleName]">
                         </asp:EntityDataSource> 
                     </EditItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
                 <asp:TemplateField HeaderText="User Active ?" SortExpression="isUserActive">
                     <ItemTemplate>
                         <asp:CheckBox ID="ActiveStatusCBDis" runat="server" Checked='<%# Eval("isUserActive") %>' Enabled="false" />

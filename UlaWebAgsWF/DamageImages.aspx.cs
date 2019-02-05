@@ -11,23 +11,24 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
 
 namespace UlaWebAgsWF
 {
     public partial class DamageImages : System.Web.UI.Page, IWebAGSClass
     {
-        protected DIMContainerDB_RevisedEntities dcde;
-        protected ContainerTransaction ct = null;
-        protected DamageTransaction dt = null;
+        protected DIMContainerDB_Revised_DevEntities dcde;
+        protected ContainerTransactionProxy ct = null;
+        protected DamageTransactionProxy dt = null;
         protected string DmgImgDirLoc = null;
         protected int TransactionID = 0;
-        protected List<DamageTypeMaster> dtm = null;
+        protected List<DamageTypeMasterProxy> dtm = null;
         private string ErrorMsg = string.Empty;
         private ServerUtilities utilities = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            dcde = new DIMContainerDB_RevisedEntities();
+            dcde = new DIMContainerDB_Revised_DevEntities();
             utilities = new ServerUtilities();
 
             if (!IsPostBack)
@@ -37,7 +38,7 @@ namespace UlaWebAgsWF
                 Response.Cache.SetNoStore();
 
                 this.Page.Title = "Container Transaction";
-                RolID.Text = ((DIMSContainerDBEFDLL.UserMaster)HttpContext.Current.Session["LoggedInUser"]).RoleID.ToString();
+                RolID.Text = ((UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).DesignationID.ToString();
                 FillDamageOptionsCB();
             }
 
@@ -45,7 +46,7 @@ namespace UlaWebAgsWF
             {
                 if (!string.IsNullOrEmpty(HttpContext.Current.Session["TransactionID"] as string) && Int32.TryParse(Request.QueryString["TransactionID"].ToString(), out TransactionID))
                 {
-                    ct = dcde.ContainerTransactions.Where(s => s.TransID == TransactionID).First();
+                    ct = (ContainerTransactionProxy)dcde.ContainerTransactions.Where(s => s.TransID == TransactionID).First();
 
                     if (ct != null)
                     {
@@ -65,7 +66,7 @@ namespace UlaWebAgsWF
                             {
                                 if ((!string.IsNullOrEmpty(ct.ContainerDmgd.ToString())) && ct.ContainerDmgd == true && !string.IsNullOrEmpty(ct.DmgDtlsID.ToString()))
                                 {
-                                    dt = dcde.DamageTransactions.Single(s => s.DmgDtlsID == ct.DmgDtlsID);
+                                    dt = (DIMSContainerDBEFDLL.EntityProxies.DamageTransactionProxy)dcde.DamageTransactions.Single(s => s.DmgDtlsID == ct.DmgDtlsID);
                                     Cont_Dmgd.Text = "Yes";
                                     Cont_Dmgd.Visible = true;
                                     lbl_Cont_Dmgd.Visible = true;
@@ -414,7 +415,7 @@ namespace UlaWebAgsWF
                         }
                     }
 
-                    DamageTransaction NewDmgTrans = new DamageTransaction();
+                    DamageTransactionProxy NewDmgTrans = new DamageTransactionProxy();
                     NewDmgTrans.RemarkCam1 = DmgRemarks[1];
                     NewDmgTrans.RemarkCam2 = DmgRemarks[2];
                     NewDmgTrans.RemarkCam3 = DmgRemarks[3];
@@ -436,9 +437,9 @@ namespace UlaWebAgsWF
                     dcde.DamageTransactions.Add(NewDmgTrans);
                     dcde.SaveChanges();
 
-                    DamageTransaction damageTransaction = dcde.DamageTransactions.OrderByDescending(s => s.DmgDtlsID).FirstOrDefault();
+                    DamageTransactionProxy DamageTransactionProxy = (DamageTransactionProxy)dcde.DamageTransactions.OrderByDescending(s => s.DmgDtlsID).FirstOrDefault();
 
-                    ct.DmgDtlsID = damageTransaction.DmgDtlsID;
+                    ct.DmgDtlsID = DamageTransactionProxy.DmgDtlsID;
                     ct.ContainerDmgd = true;
                     dcde.SaveChanges();
                 }
@@ -480,9 +481,9 @@ namespace UlaWebAgsWF
         {
             try
             {
-                List<ContainerTransaction> UnclearedTrans = dcde.ContainerTransactions.Where(a => !a.Displayed && !(bool)a.CancelStatus).Select(b => b).ToList<ContainerTransaction>();
+                List<ContainerTransactionProxy> UnclearedTrans = (List<ContainerTransactionProxy>)dcde.ContainerTransactions.Where(a => !a.Displayed && !(bool)a.CancelStatus).Select(b => b);
 
-                foreach (ContainerTransaction ct in UnclearedTrans)
+                foreach (ContainerTransactionProxy ct in UnclearedTrans)
                 {
                     ct.Displayed = true;
                 }

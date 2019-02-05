@@ -1,8 +1,12 @@
 ﻿using DIMSContainerDBEFDLL;
+using DIMSContainerDBEFDLL.EntityProxies;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,22 +15,27 @@ namespace UlaWebAgsWF
 {
     public partial class DamageImages_temp : System.Web.UI.Page
     {
-        protected DIMContainerDB_RevisedEntities dcde;
-        protected ContainerTransaction ct = null;
-        protected DamageTransaction dt = null;
+        protected DIMContainerDB_Revised_DevEntities dcde;
+        protected ContainerTransactionProxy ct = null;
+        protected DamageTransactionProxy dt = null;
         protected string DmgImgDirLoc = null;
         protected int TransactionID = 0;
-        protected List<DamageTypeMaster> dtm = null;
+        protected List<DamageTypeMasterProxy> dtm = null;
         private string ErrorMsg = string.Empty;
         private ServerUtilities utilities = null;
+        private static Logger logger = LogManager.GetLogger("TransactionPreviewLogger", typeof(DamageImages_temp));
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            dcde = new DIMContainerDB_RevisedEntities();
+            dcde = new DIMContainerDB_Revised_DevEntities();
             utilities = new ServerUtilities();
 
             try
             {
+                logger.Info(new LogMessageGenerator(() => {
+                    return "Starting to load transaction preview page";
+                }));
+
                 if (!IsPostBack)
                 {
                     Response.Cache.SetExpires(System.DateTime.UtcNow.AddMinutes(-1));
@@ -36,15 +45,15 @@ namespace UlaWebAgsWF
                     this.Page.Title = "Container Transaction";
                     Label IsPreview = new Label();
 
-                    RolID.Text = ((DIMSContainerDBEFDLL.UserMaster)HttpContext.Current.Session["LoggedInUser"]).RoleID.ToString();
+                    RolID.Text = ((UserMasterProxy)HttpContext.Current.Session["LoggedInUser"]).DesignationID.ToString();
 
                     if (!string.IsNullOrEmpty(HttpContext.Current.Session["TransactionID"] as string) && Int32.TryParse(HttpContext.Current.Session["TransactionID"].ToString(), out TransactionID))
                     {
-                        ct = dcde.ContainerTransactions.Where(s => s.TransID == TransactionID).First();
+                        ct = (ContainerTransactionProxy)dcde.ContainerTransactions.Where(s => s.TransID == TransactionID).First();
 
                         if (ct != null)
                         {
-                            ViewState["CurrentContainerTransactionID"] = ct.TransID;
+                            ViewState["CurrentContainerTransactionProxyID"] = ct.TransID;
                             Cont_Num.Text = !string.IsNullOrEmpty(ct.ContainerCode) ? ct.ContainerCode : "EMPTY TRAILER";
                             Cont_Type.Text = ct.ContainerTypeID == (int)ServerUtilities.ContainerTypes.SIZE_20_FT ? "20FT" : ct.ContainerTypeID == (int)ServerUtilities.ContainerTypes.SIZE_40_FT ? "40FT" : "N/A";
                             Cont_Num.Visible = true;
@@ -56,22 +65,30 @@ namespace UlaWebAgsWF
 
                             if (!string.IsNullOrEmpty(DmgImgDirLoc) && (Directory.Exists(DmgImgDirLoc) && Directory.GetFiles(DmgImgDirLoc).Length > 0))
                             {
+                                logger.Info(new LogMessageGenerator(() => {
+                                    return "Generating container images from application server";
+                                }));
+
                                 FillContainersImgBtns((int)ct.ContainerTypeID == 1 ? ServerUtilities.ContainerTypes.SIZE_20_FT : ServerUtilities.ContainerTypes.SIZE_40_FT, Int32.Parse(ct.LaneID.ToString()), ct.TransID.ToString());
                                 FillDamageOptionsCB();
 
                                 if (((!string.IsNullOrEmpty(ct.ContainerDmgd.ToString())) && ct.ContainerDmgd == true && !string.IsNullOrEmpty(ct.DmgDtlsID.ToString())) || ((!string.IsNullOrEmpty(ct.Displayed.ToString()) && ct.Displayed) || (!string.IsNullOrEmpty(ct.CancelStatus.ToString()) && (bool)ct.CancelStatus)))
                                 {
-                                    List<DamageTransactionDetail> DamageDetails = new List<DamageTransactionDetail>();
+                                    List<DIMSContainerDBEFDLL.EntityProxies.DamageTransactionDetailProxy> DamageDetails = new List<DIMSContainerDBEFDLL.EntityProxies.DamageTransactionDetailProxy>();
 
                                     if ((!string.IsNullOrEmpty(ct.ContainerDmgd.ToString())) && ct.ContainerDmgd == true && !string.IsNullOrEmpty(ct.DmgDtlsID.ToString()))
                                     {
-                                        dt = dcde.DamageTransactions.Single(s => s.DmgDtlsID == ct.DmgDtlsID);
-                                        DamageDetails = dcde.DamageTransactionDetails.Where(a => a.DmgDtlsID.Equals(dt.DmgDtlsID)).Select(b => b).ToList<DamageTransactionDetail>();
+                                        dt = (DamageTransactionProxy)dcde.DamageTransactions.Single(s => s.DmgDtlsID == ct.DmgDtlsID);
+                                        DamageDetails = (List<DamageTransactionDetailProxy>)dcde.DamageTransactions.Where(a => a.DmgDtlsID.Equals(dt.DmgDtlsID)).Select(b => b);
                                         Cont_Dmgd.Text = "Yes";
                                         Cont_Dmgd.Visible = true;
                                         lbl_Cont_Dmgd.Visible = true;
 
                                         FillDamageContents(DamageDetails);
+
+                                        logger.Info(new LogMessageGenerator(() => {
+                                            return "Damaged Container with Damage details ID: "+dt.DmgDtlsID;
+                                        }));
                                     }
 
                                     CB_Damaged.Visible = false;
@@ -92,25 +109,42 @@ namespace UlaWebAgsWF
                             else
                             {
                                 noPreviewTxt.Text = "No container images available";
+
+
+                                logger.Info(new LogMessageGenerator(() => {
+                                    return "Container images not available for Container: " + ct.ContainerCode + ", Transaction ID: " + ct.TransID;
+                                }));
+
                                 noPreviewTxt.Visible = true;
                             }
                         }
                         else
                         {
                             HttpContext.Current.Session["ErrorMsg"] = "Invalid transaction request, contact system admin";
+
+
+                            logger.Info(new LogMessageGenerator(() => {
+                                return "No container transaction found in database with TransactionID:" + TransactionID;
+                            }));
+
                             Response.Redirect(Request.UrlReferrer.ToString());
                         }
                     }
                     else
                     {
                         HttpContext.Current.Session["ErrorMsg"] = "Invalid transaction ID, contact system admin";
+
+                        logger.Info(new LogMessageGenerator(() => {
+                            return "Transaction ID is not valid, contact system administrator";
+                        }));
+
                         Response.Redirect(Request.UrlReferrer.ToString());
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -131,7 +165,7 @@ namespace UlaWebAgsWF
             }
         }
 
-        protected void FillContainersImgBtns(ServerUtilities.ContainerTypes ContainerType = ServerUtilities.ContainerTypes.NONE, int LaneID = 0, string TransID = "", DamageTransaction dt = null)
+        protected void FillContainersImgBtns(ServerUtilities.ContainerTypes ContainerType = ServerUtilities.ContainerTypes.NONE, int LaneID = 0, string TransID = "", DamageTransactionProxy dt = null)
         {
             try
             {
@@ -286,13 +320,13 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
-        private void FillDamageContents(List<DamageTransactionDetail> dtd)
+        private void FillDamageContents(List<DIMSContainerDBEFDLL.EntityProxies.DamageTransactionDetailProxy> dtd)
         {
-            foreach (DamageTransactionDetail damage in dtd)
+            foreach (DamageTransactionDetailProxy damage in dtd)
             {
                 TextBox TargetTB = null;
                 CheckBoxList TargetCBL = null;
@@ -372,24 +406,35 @@ namespace UlaWebAgsWF
         {
             try
             {
-                int TransactionID = Int32.Parse(ViewState["CurrentContainerTransactionID"].ToString());
-                ContainerTransaction CurrentTransaction = dcde.ContainerTransactions.Where(a => a.TransID.Equals(TransactionID)).FirstOrDefault();
+                int TransactionID = Int32.Parse(ViewState["CurrentContainerTransactionProxyID"].ToString());
+
+                ContainerTransactionProxy CurrentTransaction = (ContainerTransactionProxy)dcde.ContainerTransactions.Where(a => a.TransID.Equals(TransactionID)).FirstOrDefault();
+
+                logger.Info(new LogMessageGenerator(() => {
+                    return "Submitting verified transaction: " + CurrentTransaction.ToString();
+                }));
 
                 if (CB_Damaged.Checked)
                 {
-                    dcde.DamageTransactions.Add(new DamageTransaction());
+                    dcde.DamageTransactions.Add(new DamageTransactionProxy());
                     dcde.SaveChanges();
 
-                    DamageTransaction RecentDamageTransaction = dcde.DamageTransactions.OrderByDescending(a => a.DmgDtlsID).FirstOrDefault();
+                    DamageTransactionProxy RecentDamageTransactionProxy = (DamageTransactionProxy)dcde.DamageTransactions.OrderByDescending(a => a.DmgDtlsID).FirstOrDefault();
+
                     List<Control> DmgRemarksList = All(Mainliteral.Controls).AsEnumerable().Where(a => a.ID.Contains("PanelDmgOps") && a.GetType().Equals(typeof(Panel))).Select(a => a).ToList();
-                    List<DamageTransactionDetail> DmgDetails = new List<DamageTransactionDetail>();
+                    List<DamageTransactionDetailProxy> DmgDetails = new List<DamageTransactionDetailProxy>();
+
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "\nDamaged transaction: " + RecentDamageTransactionProxy.ToString() + "\n"+DmgDetails.ToString();
+                    }));
 
                     foreach (Control control in DmgRemarksList)
                     {
                         Panel CurrentPanel = (Panel)control;
 
-                        DamageTransactionDetail dtd = new DamageTransactionDetail();
-                        dtd.DmgDtlsID = RecentDamageTransaction.DmgDtlsID;
+                        DamageTransactionDetailProxy dtd = new DamageTransactionDetailProxy();
+                        dtd.DmgDtlsID = RecentDamageTransactionProxy.DmgDtlsID;
                         dtd.DamageRemark = ((TextBox)All(CurrentPanel.Controls).AsEnumerable().Where(a => a.ID.Contains("DmgImgCmnt")).First()).Text;
 
                         CheckBoxList DmgTypesCBL = (CheckBoxList)All(CurrentPanel.Controls).AsEnumerable().Where(a => a.ID.Contains("DmgImgCBL")).First();
@@ -412,9 +457,9 @@ namespace UlaWebAgsWF
                         DmgDetails.Add(dtd);
                     }
 
-                    DamageTransactionDetail CommonDmgTransDetail = new DamageTransactionDetail();
+                    DamageTransactionDetailProxy CommonDmgTransDetail = new DamageTransactionDetailProxy();
                     Panel CommonDmgDetailsPnl = (Panel)Mainliteral.FindControl("PanelCommonDetails");
-                    CommonDmgTransDetail.DmgDtlsID = RecentDamageTransaction.DmgDtlsID;
+                    CommonDmgTransDetail.DmgDtlsID = RecentDamageTransactionProxy.DmgDtlsID;
                     CommonDmgTransDetail.DamageRemark = ((TextBox)CommonDmgDetailsPnl.FindControl("CommonRemark")).Text;
                     CommonDmgTransDetail.DamageTypes = string.Empty;
 
@@ -435,7 +480,7 @@ namespace UlaWebAgsWF
                     CommonDmgTransDetail.IsCommonRemark = true;
 
                     DmgDetails.Add(CommonDmgTransDetail);
-                    CurrentTransaction.DmgDtlsID = RecentDamageTransaction.DmgDtlsID;
+                    CurrentTransaction.DmgDtlsID = RecentDamageTransactionProxy.DmgDtlsID;
                     CurrentTransaction.ContainerDmgd = true;
                     dcde.DamageTransactionDetails.AddRange(DmgDetails);
                 }
@@ -451,10 +496,19 @@ namespace UlaWebAgsWF
                 if (dcde.SaveChanges() > 1)
                 {
                     HttpContext.Current.Session["SuccessMsg"] = "Transaction saved successfully";
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "Transaction saved successfully, redirecting to dashboard";
+                    }));
+
                     Response.Redirect("Default.aspx");
                 }
                 else
                 {
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "Transaction can not be submitted at this moment, try again later";
+                    }));
+
                     FailureMsgTxt.Text = "Transaction can not be saved at this moment, try again later";
                     FailureMsgTxt.Visible = true;
                     FailureMsg.Visible = true;
@@ -462,7 +516,7 @@ namespace UlaWebAgsWF
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -470,16 +524,20 @@ namespace UlaWebAgsWF
         {
             try
             {
-                ContainerTransaction TransToBeCancelled = null;
+                ContainerTransactionProxy TransToBeCancelled = null;
 
                 if (ct != null)
                 {
-                    TransToBeCancelled = dcde.ContainerTransactions.Where(a => a.TransID.Equals(ct.TransID)).SingleOrDefault();
+                    TransToBeCancelled = (ContainerTransactionProxy)dcde.ContainerTransactions.Where(a => a.TransID.Equals(ct.TransID)).SingleOrDefault();
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "Cancelling transaction:\n"+TransToBeCancelled.ToString();
+                    }));
                 }
                 else
                 {
-                    int PersistedTransID = Int32.Parse(ViewState["CurrentContainerTransactionID"].ToString());
-                    TransToBeCancelled = dcde.ContainerTransactions.Where(a => a.TransID.Equals(PersistedTransID)).SingleOrDefault();
+                    int PersistedTransID = Int32.Parse(ViewState["CurrentContainerTransactionProxyID"].ToString());
+                    TransToBeCancelled = (ContainerTransactionProxy)dcde.ContainerTransactions.Where(a => a.TransID.Equals(PersistedTransID)).SingleOrDefault();
                 }
 
                 TransToBeCancelled.Displayed = false;
@@ -489,19 +547,29 @@ namespace UlaWebAgsWF
 
                 if (dcde.SaveChanges() > 0)
                 {
-                    HttpContext.Current.Session["SuccessMsg"] = "Transaction saved successfully";
+                    HttpContext.Current.Session["SuccessMsg"] = "Transaction cancelled successfully";
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "Transaction cancelled successfully, redirecting to dashboard";
+                    }));
+
                     Response.Redirect("Default.aspx", true);
                 }
                 else
                 {
                     FailureMsgTxt.Text = "Transaction can not be canceled at this moment, try again later";
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "Transaction can not be cancelled at this moment, try again later";
+                    }));
+
                     FailureMsgTxt.Visible = true;
                     FailureMsg.Visible = true;
                 }
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -509,9 +577,13 @@ namespace UlaWebAgsWF
         {
             try
             {
-                List<ContainerTransaction> UnclearedTrans = dcde.ContainerTransactions.Where(a => !a.Displayed && !(bool)a.CancelStatus).Select(b => b).ToList<ContainerTransaction>();
+                logger.Info(new LogMessageGenerator(() => {
+                    return "Clearing all the previous transactions";
+                }));
 
-                foreach (ContainerTransaction ct in UnclearedTrans)
+                List<ContainerTransactionProxy> UnclearedTrans = (List<ContainerTransactionProxy>)dcde.ContainerTransactions.Where(a => !a.Displayed && !(bool)a.CancelStatus).Select(b => b);
+
+                foreach (ContainerTransactionProxy ct in UnclearedTrans)
                 {
                     ct.Displayed = true;
                 }
@@ -519,18 +591,78 @@ namespace UlaWebAgsWF
                 if (dcde.SaveChanges() > 0)
                 {
                     HttpContext.Current.Session["SuccessMsg"] = "Transaction saved successfully";
+
+                    logger.Info(new LogMessageGenerator(() => {
+                        return "All the previous transactions cleared successfully";
+                    }));
+
                     Response.Redirect("Default.aspx", true);
                 }
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
         protected void BtnBack_Click(object sender, EventArgs e)
         {
+            logger.Info(new LogMessageGenerator(() => {
+                return "Redirecting to dashboard";
+            }));
+
             Response.Redirect("Default.aspx", true);
+        }
+
+        protected void btnDownloadImgs_Click(object sender, EventArgs e)
+        {
+            BackgroundWorker ImageDownloadBW = new BackgroundWorker();
+            ImageDownloadBW.DoWork += ImageDownloadBW_DoWork;
+            ImageDownloadBW.WorkerReportsProgress = false;
+
+            ImageDownloadBW.RunWorkerAsync();
+        }
+        
+        private void ImageDownloadBW_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (ViewState["CurrentContainerTransactionProxyID"] != null)
+            {
+                logger.Info(new LogMessageGenerator(() => {
+                    return "Creating request for container image download for Transaction ID: " + ct.TransID + " from system IP: " + HttpContext.Current.Session["SysIP"].ToString();
+                }));
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Page.ResolveUrl("~/ImageDownloadHandler.ashx"));
+                request.Headers.Add("TransID", ViewState["CurrentContainerTransactionProxyID"].ToString());
+
+                if (HttpContext.Current.Session["PositionIDs"] != null)
+                {
+                    request.Headers.Add("PositionIDs", HttpContext.Current.Session["PositionIDs"].ToString());
+                    HttpContext.Current.Session.Remove("PositionIDs");
+                }
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.Headers.HasKeys())
+                {
+                    if (response.Headers["Download"].ToString().Equals("Successful"))
+                    {
+                        logger.Info(new LogMessageGenerator(() => {
+                            return "Downloaded image successfully for transaction ID: " + ct.TransID;
+                        }));
+
+                        SuccessMsgTxt.Text = "Images download successful";
+                        SuccessMsg.Visible = true;
+                    }
+                    else
+                    {
+                        logger.Info(new LogMessageGenerator(() => {
+                            return "No images found for transaction ID: " + ct.TransID;
+                        }));
+
+                        FailureMsgTxt.Text = "No images found";
+                        FailureMsg.Visible = true;
+                    }
+                }
+            }
         }
     }
 }
